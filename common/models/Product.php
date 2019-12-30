@@ -48,17 +48,17 @@ class Product extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'description' => 'Description',
-            'price' => 'Price',
-            'picture' => 'Picture',
-            'stock' => 'Stock',
-            'created_by' => 'Created By',
-            'created_at' => 'Created At',
-            'updated_by' => 'Updated By',
-            'updated_at' => 'Updated At',
-            'category_id' => 'Category ID',
+            'id' => 'รหัส',
+            'name' => 'ชื่อสินค้า',
+            'description' => 'รายละเอียด',
+            'price' => 'ราคา',
+            'picture' => 'รูปภาพ',
+            'stock' => 'คงเหลือ',
+            'created_by' => 'เพิ่มโดย',
+            'created_at' => 'เพิ่มเมื่อ',
+            'updated_by' => 'แก้ไขโดย',
+            'updated_at' => 'แก้ไขเมื่อ',
+            'category_id' => 'ประเภทสินค้า',
         ];
     }
 
@@ -67,6 +67,16 @@ class Product extends \yii\db\ActiveRecord {
             BlameableBehavior::className(),
             TimestampBehavior::className(),
         ];
+    }
+
+    public function getCreator()
+    {
+        return $this->hasOne(\common\models\User::className(),['id' => 'created_by']);
+    }
+
+    public function getCategories()
+    {
+        return $this->hasOne(\common\models\Category::className(),['id' => 'category_id']);
     }
 
 }

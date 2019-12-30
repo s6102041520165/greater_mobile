@@ -41,4 +41,9 @@ class Category extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
+
+    public function getCategories()
+    {
+        return $this->hasMany(\common\models\Category::className(),['id' => 'category_id']);
+    }
 }

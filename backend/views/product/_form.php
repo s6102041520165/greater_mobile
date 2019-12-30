@@ -17,8 +17,9 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'description')->textarea(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
+    <?php //var_dump($imageModel) ?>
 
-    <?= $form->field($model, 'imageFile')->fileInput() ?>
+    <?php echo $form->field($imageModel, 'imageFile')->fileInput() ?>
 
     <?= $form->field($model, 'stock')->textInput() ?>
     

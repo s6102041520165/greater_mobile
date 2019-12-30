@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Product;
 use backend\models\ProductSearch;
+use backend\models\UploadSingleForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -66,12 +67,18 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
+        $uploadSingleFile = new UploadSingleForm();
         if($model->load(Yii::$app->request->post()) && Yii::$app->request->isPost){
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            $uploadSingleFile->imageFile = UploadedFile::getInstance($uploadSingleFile, 'imageFile');
             //Upload file
-            if ($model->upload()) {
+            $picture = $uploadSingleFile->upload();
+            //var_dump($picture);die();
+            if ($picture) {
                 //Uploaded successfully
-                $model->save();
+                $model->picture = $picture;
+                //var_dump($model->picture);die();
+                
+                $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
             
@@ -79,6 +86,7 @@ class ProductController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'imageModel' => $uploadSingleFile,
         ]);
     }
 

@@ -33,13 +33,34 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description',
             'price',
-            'picture',
+            [
+                'attribute' => 'picture',
+                'format' => ['image',['width'=>'500px']], 
+                'value ' => function($data){
+                    return('@web/'.$data->picture);
+                }
+            ],
             'stock',
-            'created_by',
-            'created_at',
-            'updated_by',
-            'updated_at',
-            'category_id',
+            [
+                'attribute' => 'created_by',
+                'value' => function($data){
+                    return $data->creator['username'];
+                }
+            ],
+            'created_at:relativeTime',
+            [
+                'attribute' => 'updated_by',
+                'value' => function($data){
+                    return $data->creator['username'];
+                }
+            ],
+            'updated_at:relativeTime',
+            [
+                'attribute' => 'category_id',
+                'value' => function($data){
+                    return $data->categories['name'];
+                }
+            ]
         ],
     ]) ?>
 
