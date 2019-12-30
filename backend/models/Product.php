@@ -6,6 +6,8 @@ use yii\web\UploadedFile;
 
 class Product extends \common\models\Product {
     
+
+    
 }
 
 
