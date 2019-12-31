@@ -17,32 +17,28 @@ use yii\widgets\ActiveForm;
             'data-pjax' => 1
         ],
     ]); ?>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <?= $form->field($model, 'id') ?>
+                </div>
 
-    <?= $form->field($model, 'id') ?>
+                <div class="col-lg-8">
+                    <?= $form->field($model, 'name') ?>
+                </div>
 
-    <?= $form->field($model, 'name') ?>
+                <div class="col-lg-2">
+                    <?= $form->field($model, 'price') ?>
+                </div>
 
-    <?= $form->field($model, 'description') ?>
+            </div>
 
-    <?= $form->field($model, 'price') ?>
-
-    <?= $form->field($model, 'picture') ?>
-
-    <?php // echo $form->field($model, 'stock') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'category_id') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+            <div class="form-group">
+                <?= Html::submitButton('ค้นหา', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('เคลียร์', ['class' => 'btn btn-outline-secondary']) ?>
+            </div>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>
