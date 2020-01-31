@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'stock')->textInput() ?>
     
-    <?php $catg = yii\helpers\ArrayHelper::map(\backend\models\Category::find()->all(), 'id', 'name') ?>
+    <?php $catg = \yii\helpers\ArrayHelper::map(\backend\models\Category::find()->all(), 'id', 'name') ?>
     <?php //print_r($catg);?>
     <?= $form->field($model, 'category_id')->dropDownList($catg,['prompt' => '---------- select ----------']) ?>
 
