@@ -30,18 +30,24 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget' => 'tree'],
                 'items' => [
-                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
+                    ['label' => 'เมนู', 'options' => ['class' => 'header']],
                     //['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'ประเภทสินค้า', 'icon' => 'list', 'url' => ['/category'],],
-                    ['label' => 'สินค้า', 'icon' => 'list', 'url' => ['/product'],],
-                    ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'สินค้า', 'icon' => 'barcode', 'url' => ['/product'],],
+                    ['label' => 'การส่งสินค้า', 'icon' => 'truck', 'url' => ['/tracking'],],
+                    ['label' => 'การสั่งซื้อ', 'icon' => 'gift', 'url' => ['/orders'],],
+                    ['label' => 'ลูกค้า', 'icon' => 'users', 'url' => ['/customer'],],
+                    ['label' => 'รายงาน', 'options' => ['class' => 'header']],
                     [
                         'label' => 'รายงาน',
                         'icon' => 'file',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'ประเภทสินค้า', 'icon' => 'file', 'url' => ['/product'],],
-                            ['label' => 'สินค้า', 'icon' => 'file', 'url' => ['/rproduct'],],
+                            ['label' => 'ประเภทสินค้า', 'icon' => 'file', 'url' => ['/report/product'],],
+                            ['label' => 'สินค้า', 'icon' => 'file', 'url' => ['/report/product'],],
+                            ['label' => 'ลูกค้า', 'icon' => 'file', 'url' => ['/report/customer'],],
+                            ['label' => 'ส่งสินค้า', 'icon' => 'file', 'url' => ['/report/receive'],],
+                            ['label' => 'รับสินค้า', 'icon' => 'file', 'url' => ['/report/delivery'],],
                         ]
                     ],
                 ],
