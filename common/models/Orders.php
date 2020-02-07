@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "orders".
@@ -50,6 +52,14 @@ class Orders extends \yii\db\ActiveRecord
             'updated_at' => 'แก้ไขเมื่อ',
             'created_by' => 'สั่งซื้อโดย',
             'updated_by' => 'แก้ไขโดย',
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            BlameableBehavior::className(),
+            TimestampBehavior::className(),
         ];
     }
 }
