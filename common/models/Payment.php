@@ -47,15 +47,15 @@ class Payment extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'order_id' => 'Order ID',
-            'bank' => 'Bank',
-            'location' => 'Location',
-            'amount' => 'Amount',
-            'date_pay' => 'Date Pay',
-            'time_pay' => 'Time Pay',
-            'status' => 'Status',
-            'image' => 'Image',
+            'id' => 'รหัส',
+            'order_id' => 'รหัสใบสั่งซื้อ',
+            'bank' => 'ธนาคาร',
+            'location' => 'สถานที่โอน',
+            'amount' => 'จำนวนที่โอน',
+            'date_pay' => 'วันที่โอน',
+            'time_pay' => 'เวลาที่โอน',
+            'status' => 'สถานะ',
+            'image' => 'รูปภาพ',
         ];
     }
 }

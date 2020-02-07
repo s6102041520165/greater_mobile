@@ -43,13 +43,13 @@ class Orders extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'sumtotal' => 'Sumtotal',
-            'customer_id' => 'Customer ID',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
+            'id' => 'รหัส',
+            'sumtotal' => 'ราคารวม',
+            'customer_id' => 'รหัสพนักงาน',
+            'created_at' => 'สั่งซื้อเมื่อ',
+            'updated_at' => 'แก้ไขเมื่อ',
+            'created_by' => 'สั่งซื้อโดย',
+            'updated_by' => 'แก้ไขโดย',
         ];
     }
 }

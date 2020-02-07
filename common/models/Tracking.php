@@ -39,9 +39,9 @@ class Tracking extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'order_id' => 'Order ID',
-            'barcode' => 'Barcode',
+            'id' => 'รหัส',
+            'order_id' => 'รหัสใบสั่งซื้อ',
+            'barcode' => 'บาร์โค๊ด',
         ];
     }
 }

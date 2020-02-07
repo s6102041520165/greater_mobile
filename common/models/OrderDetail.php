@@ -39,10 +39,10 @@ class OrderDetail extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'orders_id' => 'Orders ID',
-            'product_id' => 'Product ID',
-            'quantity' => 'Quantity',
+            'id' => 'รหัส',
+            'orders_id' => 'ใบสั่งซื้อ',
+            'product_id' => 'สินค้า',
+            'quantity' => 'จำนวนที่สั่งซื้อ',
         ];
     }
 }
