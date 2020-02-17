@@ -16,6 +16,8 @@ use Yii;
  * @property string $time_pay
  * @property int $status
  * @property string|null $image
+ *
+ * @property Orders $order
  */
 class Payment extends \yii\db\ActiveRecord
 {
@@ -38,6 +40,8 @@ class Payment extends \yii\db\ActiveRecord
             [['amount'], 'number'],
             [['date_pay', 'time_pay'], 'safe'],
             [['bank', 'location', 'image'], 'string', 'max' => 255],
+            [['order_id'], 'unique'],
+            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'id']],
         ];
     }
 
@@ -47,15 +51,25 @@ class Payment extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'รหัส',
-            'order_id' => 'รหัสใบสั่งซื้อ',
-            'bank' => 'ธนาคาร',
-            'location' => 'สถานที่โอน',
-            'amount' => 'จำนวนที่โอน',
-            'date_pay' => 'วันที่โอน',
-            'time_pay' => 'เวลาที่โอน',
-            'status' => 'สถานะ',
-            'image' => 'รูปภาพ',
+            'id' => 'ID',
+            'order_id' => 'Order ID',
+            'bank' => 'Bank',
+            'location' => 'Location',
+            'amount' => 'Amount',
+            'date_pay' => 'Date Pay',
+            'time_pay' => 'Time Pay',
+            'status' => 'Status',
+            'image' => 'Image',
         ];
+    }
+
+    /**
+     * Gets query for [[Order]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrder()
+    {
+        return $this->hasOne(Orders::className(), ['id' => 'order_id']);
     }
 }

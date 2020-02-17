@@ -17,6 +17,8 @@ use Yii;
  * @property string $telephone
  * @property string|null $picture
  * @property int $user_id
+ *
+ * @property User $user
  */
 class Customer extends \yii\db\ActiveRecord
 {
@@ -39,6 +41,7 @@ class Customer extends \yii\db\ActiveRecord
             [['first_name', 'last_name'], 'string', 'max' => 50],
             [['district', 'amphoe', 'province', 'zipcode', 'telephone', 'picture'], 'string', 'max' => 255],
             [['user_id'], 'unique'],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -48,16 +51,26 @@ class Customer extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'รหัส',
-            'first_name' => 'ชื่อ',
-            'last_name' => 'นามสกุล',
-            'district' => 'ตำบล',
-            'amphoe' => 'อำเภอ',
-            'province' => 'จังหวัด',
-            'zipcode' => 'รหัสไปรษณีย์',
-            'telephone' => 'เบอร์โทร',
-            'picture' => 'รูปภาพ',
-            'user_id' => 'รหัสผู้ใช้'
+            'id' => 'ID',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'district' => 'District',
+            'amphoe' => 'Amphoe',
+            'province' => 'Province',
+            'zipcode' => 'Zipcode',
+            'telephone' => 'Telephone',
+            'picture' => 'Picture',
+            'user_id' => 'User ID',
         ];
+    }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

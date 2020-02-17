@@ -10,6 +10,8 @@ use Yii;
  * @property int $id
  * @property int $order_id
  * @property int $barcode
+ *
+ * @property Orders $order
  */
 class Tracking extends \yii\db\ActiveRecord
 {
@@ -30,6 +32,7 @@ class Tracking extends \yii\db\ActiveRecord
             [['order_id', 'barcode'], 'required'],
             [['order_id', 'barcode'], 'integer'],
             [['barcode'], 'unique'],
+            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'id']],
         ];
     }
 
@@ -39,9 +42,19 @@ class Tracking extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'รหัส',
-            'order_id' => 'รหัสใบสั่งซื้อ',
-            'barcode' => 'บาร์โค๊ด',
+            'id' => 'ID',
+            'order_id' => 'Order ID',
+            'barcode' => 'Barcode',
         ];
+    }
+
+    /**
+     * Gets query for [[Order]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrder()
+    {
+        return $this->hasOne(Orders::className(), ['id' => 'order_id']);
     }
 }

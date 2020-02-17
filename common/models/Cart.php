@@ -5,24 +5,24 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "order_detail".
+ * This is the model class for table "cart".
  *
  * @property int $id
- * @property int $orders_id
  * @property int $product_id
+ * @property int|null $created_by
+ * @property int|null $created_at
  * @property int $quantity
  *
- * @property Orders $orders
  * @property Product $product
  */
-class OrderDetail extends \yii\db\ActiveRecord
+class Cart extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'order_detail';
+        return 'cart';
     }
 
     /**
@@ -31,9 +31,8 @@ class OrderDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['orders_id', 'product_id', 'quantity'], 'required'],
-            [['orders_id', 'product_id', 'quantity'], 'integer'],
-            [['orders_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['orders_id' => 'id']],
+            [['product_id', 'quantity'], 'required'],
+            [['product_id', 'created_by', 'created_at', 'quantity'], 'integer'],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
@@ -45,20 +44,11 @@ class OrderDetail extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'orders_id' => 'Orders ID',
             'product_id' => 'Product ID',
+            'created_by' => 'Created By',
+            'created_at' => 'Created At',
             'quantity' => 'Quantity',
         ];
-    }
-
-    /**
-     * Gets query for [[Orders]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrders()
-    {
-        return $this->hasOne(Orders::className(), ['id' => 'orders_id']);
     }
 
     /**
