@@ -17,7 +17,7 @@ class m191229_183915_create_product_table extends Migration
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
-        
+
         $this->createTable('{{%product}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(100)->notNull(),
@@ -30,7 +30,7 @@ class m191229_183915_create_product_table extends Migration
             'updated_by' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
             'category_id' => $this->integer()->notNull(),
-        ],$tableOptions);
+        ], $tableOptions);
     }
 
     /**

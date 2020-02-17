@@ -20,7 +20,16 @@ class m200206_053045_create_tracking_table extends Migration
             'id' => $this->primaryKey(),
             'order_id' => $this->integer()->notNull(),
             'barcode' => $this->integer()->notNull()->unique(),
-        ],$tableOptions);
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'fk-tracking-order_id',
+            'tracking',
+            'order_id',
+            'orders',
+            'id',
+            'CASCADE'
+        );
     }
 
     /**

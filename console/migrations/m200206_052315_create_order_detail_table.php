@@ -21,7 +21,25 @@ class m200206_052315_create_order_detail_table extends Migration
             'orders_id' => $this->integer()->notNull(),
             'product_id' => $this->integer()->notNull(),
             'quantity' => $this->integer()->notNull(),
-        ],$tableOptions);
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'fk-order_detail-product_id',
+            'order_detail',
+            'product_id',
+            'product',
+            'id',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk-order_detail-order_id',
+            'order_detail',
+            'orders_id',
+            'orders',
+            'id',
+            'CASCADE'
+        );
     }
 
     /**
