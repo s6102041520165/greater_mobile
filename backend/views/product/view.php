@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'category_id',
                 'value' => function($data){
-                    return $data->categories['name'];
+                    return $data->ประเภทสินค้า['name'];
                 }
             ]
         ],
