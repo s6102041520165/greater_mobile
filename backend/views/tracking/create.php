@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Tracking */
 
-$this->title = 'Create Tracking';
-$this->params['breadcrumbs'][] = ['label' => 'Trackings', 'url' => ['index']];
+$this->title = 'เพิ่มพัสดุ';
+$this->params['breadcrumbs'][] = ['label' => 'พัสดุ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tracking-create">

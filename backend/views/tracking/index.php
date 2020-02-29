@@ -7,15 +7,14 @@ use yii\widgets\Pjax;
 /* @var $searchModel backend\models\TrackingSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Trackings';
+$this->title = 'พัสดุ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tracking-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Tracking', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('เพิ่มพัสดุ', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>

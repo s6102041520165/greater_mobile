@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Products';
+$this->title = 'สินค้า';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
