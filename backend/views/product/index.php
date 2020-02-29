@@ -1,5 +1,6 @@
 <?php
 
+use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -12,41 +13,45 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(FA::icon('plus') . ' เพิ่มสินค้า', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    <div class="panel">
+        <div class="panel-body">
 
-            'id',
-            'name',
-            'price',
-            [
-                'attribute' => 'picture',
-                'format' => ['image',['width'=>'250px']],
-                'value' => function($data){
-                    return $data->picture;
-                }
-            ],
-            //'stock',
-            //'created_by',
-            //'created_at',
-            //'updated_by',
-            //'updated_at',
-            //'category_id',
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                //'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                    'id',
+                    'name',
+                    'price',
+                    [
+                        'attribute' => 'picture',
+                        'format' => ['image', ['width' => '250px']],
+                        'value' => function ($data) {
+                            return $data->picture;
+                        }
+                    ],
+                    //'stock',
+                    //'created_by',
+                    //'created_at',
+                    //'updated_by',
+                    //'updated_at',
+                    //'category_id',
+
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]); ?>
+        </div>
+    </div>
 
     <?php Pjax::end(); ?>
 

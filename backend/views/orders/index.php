@@ -1,5 +1,6 @@
 <?php
 
+use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -7,18 +8,19 @@ use yii\widgets\Pjax;
 /* @var $searchModel backend\models\OrdersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Orders';
+$this->title = 'ใบสั่งซื้อ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orders-index">
 
 
     <p>
-        <?= Html::a('Create Orders', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(FA::icon('plus') . ' เพิ่มรายการสั่งซื้อ', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,9 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'sumtotal',
-            'customer_id',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'customer_id',
+                'value' => 'customer.first_name'
+            ],
+            'created_at:relativeTime',
+            'updated_at:relativeTime',
             //'created_by',
             //'updated_by',
 

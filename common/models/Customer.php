@@ -51,16 +51,16 @@ class Customer extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
-            'district' => 'District',
-            'amphoe' => 'Amphoe',
-            'province' => 'Province',
-            'zipcode' => 'Zipcode',
-            'telephone' => 'Telephone',
-            'picture' => 'Picture',
-            'user_id' => 'User ID',
+            'id' => 'รหัสอ้างอิง',
+            'first_name' => 'ชื่อ',
+            'last_name' => 'นามสกุล',
+            'district' => 'ตำบล',
+            'amphoe' => 'อำเภอ',
+            'province' => 'จังหวัด',
+            'zipcode' => 'รหัสไปรษณีย์',
+            'telephone' => 'เบอร์โทร',
+            'picture' => 'รูปโปรไฟล์',
+            'user_id' => 'ผู้ใช้',
         ];
     }
 

@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <!-- search form -->
+        <!-- 
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Search..." />
@@ -24,7 +24,7 @@
                 </span>
             </div>
         </form>
-        <!-- /.search form -->
+        <!-- /.search form-->
 
         <?= dmstr\widgets\Menu::widget(
             [

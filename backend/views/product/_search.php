@@ -1,5 +1,6 @@
 <?php
 
+use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -35,8 +36,8 @@ use yii\widgets\ActiveForm;
             </div>
 
             <div class="form-group">
-                <?= Html::submitButton('ค้นหา', ['class' => 'btn btn-primary']) ?>
-                <?= Html::submitButton('เคลียร์', ['class' => 'btn btn-outline-secondary']) ?>
+                <?= Html::submitButton(FA::icon('search').' ค้นหา', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton(FA::icon('undo').' เคลียร์', ['class' => 'btn btn-outline-secondary']) ?>
             </div>
         </div>
     </div>

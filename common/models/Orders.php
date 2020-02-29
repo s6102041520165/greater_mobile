@@ -47,7 +47,7 @@ class Orders extends \yii\db\ActiveRecord
         return [
             'id' => 'รหัส',
             'sumtotal' => 'ราคารวม',
-            'customer_id' => 'รหัสพนักงาน',
+            'customer_id' => 'ลูกค้า',
             'created_at' => 'สั่งซื้อเมื่อ',
             'updated_at' => 'แก้ไขเมื่อ',
             'created_by' => 'สั่งซื้อโดย',
@@ -61,5 +61,10 @@ class Orders extends \yii\db\ActiveRecord
             BlameableBehavior::className(),
             TimestampBehavior::className(),
         ];
+    }
+
+    public function getCustomer()
+    {
+        return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
     }
 }

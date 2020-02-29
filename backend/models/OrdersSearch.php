@@ -17,8 +17,9 @@ class OrdersSearch extends Orders
     public function rules()
     {
         return [
-            [['id', 'customer_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['sumtotal'], 'number'],
+            [['customer_id'],'safe']
         ];
     }
 
@@ -40,7 +41,7 @@ class OrdersSearch extends Orders
      */
     public function search($params)
     {
-        $query = Orders::find();
+        $query = Orders::find()->joinWith(['customer']);
 
         // add conditions that should always apply here
 
@@ -60,12 +61,13 @@ class OrdersSearch extends Orders
         $query->andFilterWhere([
             'id' => $this->id,
             'sumtotal' => $this->sumtotal,
-            'customer_id' => $this->customer_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
+
+        $query->andFilterWhere(['like','customer.first_name',$this->customer_id]);
 
         return $dataProvider;
     }

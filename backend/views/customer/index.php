@@ -12,34 +12,38 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="customer-index">
 
+    <div class="panel">
+        <div class="panel-body">
+            <p>
+                <?= Html::a('เพิ่มลูกค้า', ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
 
-    <p>
-        <?= Html::a('Create Customer', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+            <?php Pjax::begin(); ?>
+            <?php // echo $this->render('_search', ['model' => $searchModel]); 
+            ?>
 
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                    'id',
+                    'first_name',
+                    'last_name',
+                    'district',
+                    'amphoe',
+                    //'province',
+                    //'zipcode',
+                    //'telephone',
+                    //'user_id',
 
-            'id',
-            'first_name',
-            'last_name',
-            'district',
-            'amphoe',
-            //'province',
-            //'zipcode',
-            //'telephone',
-            //'user_id',
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]); ?>
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
-    <?php Pjax::end(); ?>
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
 
 </div>

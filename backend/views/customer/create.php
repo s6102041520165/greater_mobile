@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Customer */
 
-$this->title = 'Create Customer';
+$this->title = 'เพิ่มลูกค้า';
 $this->params['breadcrumbs'][] = ['label' => 'ลูกค้า', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
