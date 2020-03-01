@@ -1,5 +1,6 @@
 <?php
 
+use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -15,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="panel">
         <div class="panel-body">
             <p>
-                <?= Html::a('เพิ่มลูกค้า', ['create'], ['class' => 'btn btn-success']) ?>
+                <?= Html::a(FA::icon('plus').' เพิ่มลูกค้า', ['create'], ['class' => 'btn btn-success']) ?>
             </p>
 
             <?php Pjax::begin(); ?>

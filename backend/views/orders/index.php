@@ -21,27 +21,33 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
+    <div class="panel">
+        <div class="panel-body">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                    'id',
+                    'sumtotal',
+                    [
+                        'label' => 'ชื่อ - สกุล',
+                        'attribute' => 'customer_id',
+                        'value' => function($data){
+                            return $data->customer['first_name']." ".$data->customer['last_name'];
+                        }
+                    ],
+                    'created_at:relativeTime',
+                    //'updated_at:relativeTime',
+                    //'created_by',
+                    //'updated_by',
 
-            'id',
-            'sumtotal',
-            [
-                'attribute' => 'customer_id',
-                'value' => 'customer.first_name'
-            ],
-            'created_at:relativeTime',
-            'updated_at:relativeTime',
-            //'created_by',
-            //'updated_by',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]); ?>
+        </div>
+    </div>
 
     <?php Pjax::end(); ?>
 

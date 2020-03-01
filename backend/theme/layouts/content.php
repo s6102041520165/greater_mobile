@@ -41,7 +41,8 @@ class GreaterMobile extends Yii
     </section>
 
     <section class="content">
-        <?= Alert::widget() ?>
+        <?php //echo Alert::widget() ?>
+        <?php $this->render('alert.php')?>
         <?= $content ?>
     </section>
 </div>

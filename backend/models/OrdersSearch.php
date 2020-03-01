@@ -11,6 +11,8 @@ use backend\models\Orders;
  */
 class OrdersSearch extends Orders
 {
+    public $customer_firstname;
+    public $customer_lastname;
     /**
      * {@inheritdoc}
      */
@@ -19,7 +21,7 @@ class OrdersSearch extends Orders
         return [
             [['id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['sumtotal'], 'number'],
-            [['customer_id'],'safe']
+            [['customer_id'], 'safe']
         ];
     }
 
@@ -51,6 +53,11 @@ class OrdersSearch extends Orders
 
         $this->load($params);
 
+        $dataProvider->sort->attributes['customer_id'] = [
+            'asc' => ['customer.first_name' => 'SORT_ASC'],
+            'desc' => ['customer.first_name' => 'SORT_DESC'],
+        ];
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -64,10 +71,14 @@ class OrdersSearch extends Orders
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
+            //'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like','customer.first_name',$this->customer_id]);
+        $query->andFilterWhere([
+            'OR',
+            ['like', 'customer.first_name', $this->customer_id],
+            ['like', 'customer.last_name', $this->customer_id]
+        ]);
 
         return $dataProvider;
     }
