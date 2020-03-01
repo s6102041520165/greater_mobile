@@ -22,6 +22,7 @@ class m191229_183915_create_product_table extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(100)->notNull(),
             'description' => $this->string(),
+            'barcode' => $this->string(100)->notNull(),
             'price' => $this->float()->notNull(),
             'picture' => $this->string(),
             'stock' => $this->smallInteger()->notNull(),

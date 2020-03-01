@@ -20,6 +20,13 @@ class UploadSingleForm extends Model {
         $this->imageFile->saveAs(Yii::getAlias('@webroot').'/'.$path);
         return $path;
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'imageFile' => 'รูปภาพ'
+        ];
+    }
 }
 
 

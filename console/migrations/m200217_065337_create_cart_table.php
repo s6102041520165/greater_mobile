@@ -17,6 +17,8 @@ class m200217_065337_create_cart_table extends Migration
             'product_id' => $this->integer()->notNull(),
             'created_by' => $this->integer(),
             'created_at' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'updated_at' => $this->integer(),
             'quantity'=> $this->integer()->notNull(),
         ]);
 

@@ -32,7 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     'id',
                     'name',
-                    'price',
+                    [
+                        'attribute' => 'price',
+                    ],
+                    'barcode',
                     [
                         'attribute' => 'picture',
                         'format' => ['image', ['width' => '250px']],

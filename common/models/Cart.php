@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "cart".
@@ -44,10 +46,18 @@ class Cart extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'product_id' => 'Product ID',
-            'created_by' => 'Created By',
-            'created_at' => 'Created At',
-            'quantity' => 'Quantity',
+            'product_id' => 'สินค้า',
+            'created_by' => 'สั่งซื้อโดย',
+            'created_at' => 'สั่งซื้อเมื่อ',
+            'quantity' => 'จำนวนที่สั่งซื้อ',
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            BlameableBehavior::className(),
+            TimestampBehavior::className(),
         ];
     }
 

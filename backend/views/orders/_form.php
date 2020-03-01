@@ -1,5 +1,6 @@
 <?php
 
+use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,12 +13,13 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'sumtotal')->textInput() ?>
+    <h3 class="heading">เพิ่มรายการสั่งซื้อ</h3>
 
-    <?= $form->field($model, 'customer_id')->textInput() ?>
+    <?= $form->field($model, 'barcode')->textInput(['autofocus' => true]) ?>
+
 
     <div class="form-group">
-        <?= Html::submitButton('บันทึก', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(FA::icon('plus').' เลือกซื้อ', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

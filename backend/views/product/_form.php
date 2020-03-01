@@ -1,5 +1,6 @@
 <?php
 
+use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -9,28 +10,49 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="product-form">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+                <div class="col-lg-12">
+                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                </div>
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+                <div class="col-lg-12">
+                    <?= $form->field($model, 'description')->textarea(['maxlength' => true]) ?>
+                </div>
+                <div class="col-lg-4">
+                    <?= $form->field($model, 'price')->textInput() ?>
+                </div>
+                <?php //var_dump($imageModel) 
+                ?>
+                <div class="col-lg-4">
+                    <?php echo $form->field($imageModel, 'imageFile')->fileInput() ?>
+                </div>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                <div class="col-lg-4">
+                    <?= $form->field($model, 'stock')->textInput() ?>
+                </div>
 
-    <?= $form->field($model, 'description')->textarea(['maxlength' => true]) ?>
+                <?php $catg = \yii\helpers\ArrayHelper::map(\backend\models\Category::find()->all(), 'id', 'name') ?>
+                <?php //print_r($catg);
+                ?>
+                <div class="col-lg-12">
+                    <?= $form->field($model, 'category_id')->dropDownList($catg, ['prompt' => '---------- select ----------']) ?>
+                </div>
+                <div class="col-lg-12">
+                    <?= $form->field($model, 'barcode')->textInput() ?>
+                </div>
 
-    <?= $form->field($model, 'price')->textInput() ?>
-    <?php //var_dump($imageModel) ?>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <?= Html::submitButton('บันทึก', ['class' => 'btn btn-success']) ?>
+                    </div>
+                </div>
 
-    <?php echo $form->field($imageModel, 'imageFile')->fileInput() ?>
-
-    <?= $form->field($model, 'stock')->textInput() ?>
-    
-    <?php $catg = \yii\helpers\ArrayHelper::map(\backend\models\Category::find()->all(), 'id', 'name') ?>
-    <?php //print_r($catg);?>
-    <?= $form->field($model, 'category_id')->dropDownList($catg,['prompt' => '---------- select ----------']) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('บันทึก', ['class' => 'btn btn-success']) ?>
+                <?php ActiveForm::end(); ?>
+            </div>
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
 
 </div>

@@ -21,24 +21,27 @@ use yii\behaviors\TimestampBehavior;
  * @property int $updated_at
  * @property int $category_id
  */
-class Product extends \yii\db\ActiveRecord {
+class Product extends \yii\db\ActiveRecord
+{
 
     /**
      * {@inheritdoc}
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'product';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            [['name', 'price', 'stock', 'created_by', 'created_at', 'updated_by', 'updated_at', 'category_id'], 'required'],
+            [['name', 'price', 'barcode', 'stock', 'created_by', 'created_at', 'updated_by', 'updated_at', 'category_id'], 'required'],
             [['price'], 'number'],
             [['stock', 'created_by', 'created_at', 'updated_by', 'updated_at', 'category_id'], 'integer'],
-            [['name'], 'string', 'max' => 100],
+            [['name', 'barcode'], 'string', 'max' => 100],
             [['description', 'picture'], 'string', 'max' => 255],
         ];
     }
@@ -46,12 +49,14 @@ class Product extends \yii\db\ActiveRecord {
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
-            'id' => 'รหัส',
+            'id' => 'รหัสสินค้า',
             'name' => 'ชื่อสินค้า',
             'description' => 'รายละเอียด',
             'price' => 'ราคา',
+            'barcode' => 'บาร์โค๊ด',
             'picture' => 'รูปภาพ',
             'stock' => 'คงเหลือ',
             'created_by' => 'เพิ่มโดย',
@@ -62,7 +67,8 @@ class Product extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             BlameableBehavior::className(),
             TimestampBehavior::className(),
@@ -71,12 +77,11 @@ class Product extends \yii\db\ActiveRecord {
 
     public function getCreator()
     {
-        return $this->hasOne(\common\models\User::className(),['id' => 'created_by']);
+        return $this->hasOne(\common\models\User::className(), ['id' => 'created_by']);
     }
 
     public function getCategories()
     {
-        return $this->hasOne(\common\models\Category::className(),['id' => 'category_id']);
+        return $this->hasOne(\common\models\Category::className(), ['id' => 'category_id']);
     }
-
 }
