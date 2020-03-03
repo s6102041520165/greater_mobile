@@ -7,6 +7,7 @@ use Yii;
 use backend\models\Orders;
 use backend\models\OrdersSearch;
 use backend\models\Product;
+use Exception;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\web\Controller;
@@ -71,35 +72,41 @@ class OrdersController extends Controller
         $model = new Product();
 
         //$cart = new Cart();
-        
+
         $provider = new ActiveDataProvider([
             'query' => Cart::find()->where(['created_by' => Yii::$app->user->id]),
             'pagination' => [
-                'pageSize' => 2,
+                'pageSize' => 5,
             ],
         ]);
-
 
 
         if ($model->load(Yii::$app->request->post())) {
             //var_dump($model->barcode);die();
             $product = $this->findBarcode($model->barcode);
 
-            //Search model with product_id
-            $cart = Cart::findOne(['product_id' => $product->id]);
-            
-            if($cart!== null){
-                $cart->product_id = $product->id;
-                $cart->id =  $cart->id;
-                //Added previous quantity
-                $cart->quantity = $cart->quantity += 1;
-            } else {
-                $cart = new Cart();
-                $cart->product_id = $product->id;
-                $cart->quantity = 1;
+            //ดักไม่ให้เกิด Exception
+            try {
+                //ค้นหาตะกร้าสินค้าจาก product_id 
+                $cart = Cart::findOne(['product_id' => $product->id]);
+                //ถ้าพบสินค้าชิ้นเดียวกับรหัสบาร์โค๊ดให้ทำในเงื่อนไข
+                if ($cart !== null) {
+                    $cart->product_id = $product->id;
+                    $cart->id =  $cart->id;
+                    //เพิ่มจำนวนขึ้นทีละ 1
+                    $cart->quantity = $cart->quantity += 1;
+                } else {
+                    //กรณีเพิ่มสินค้านี้เป็นชิ้นแรก
+                    $cart = new Cart();
+                    $cart->product_id = $product->id;
+                    $cart->quantity = 1;
+                }
+    
+                $cart->save();
+            } catch (Exception $e) {
+                Yii::$app->session->setFlash('warning', 'ไม่พบสินค้ารหัสบาร์โค๊ด ' . $model->barcode);
             }
-            
-            $cart->save();
+
             return $this->redirect(['create']);
         }
 
@@ -121,12 +128,13 @@ class OrdersController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if($model->quantity == 0){
+                $this->findModel($model->id)->delete();
+            }
+            return $this->redirect(['create']);
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->redirect(['create']);
     }
 
     /**
@@ -140,7 +148,7 @@ class OrdersController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['create']);
     }
 
     /**
@@ -152,7 +160,7 @@ class OrdersController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Orders::findOne($id)) !== null) {
+        if (($model = Cart::findOne($id)) !== null) {
             return $model;
         }
 
@@ -165,5 +173,4 @@ class OrdersController extends Controller
             return $model;
         }
     }
-
 }

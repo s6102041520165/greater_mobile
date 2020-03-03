@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Html;
 use yii\grid\GridView;
 
 ?>
@@ -10,10 +11,19 @@ use yii\grid\GridView;
         [
             'attribute' => 'product_id',
             'value' => function ($data) {
-                return $data->product['name'] . " หน่วย";
+                return $data->product['name'];
             }
         ],
-        'quantity',
+        [
+            'attribute' => 'quantity',
+            'format' => 'raw',
+            'value' => function ($data) {
+                return Html::beginForm(['orders/update', 'id' => $data->id], 'post', ['enctype' => 'multipart/form-data']) .
+                    Html::activeInput('text', $data, 'quantity', ['class' => 'form-control', 'style' => 'max-width:80px;text-align:right']) .
+                    Html::error($data, 'quantity').
+                    Html::endForm();
+            }
+        ],
         //'created_at:relativeTime',
         [
             'class' => 'yii\grid\ActionColumn',
@@ -21,3 +31,8 @@ use yii\grid\GridView;
         ],
     ],
 ]) ?>
+<?php if(($cart->getModels()) != null): ?>
+<div class="pull-right">
+    <?=Html::a('ยืนยันการสั่งซื้อ', ['checkout'], ['data-method' => 'post','class'=>'btn btn-primary'])?>
+</div>
+<?php endif;  ?>

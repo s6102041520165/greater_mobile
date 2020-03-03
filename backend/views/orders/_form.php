@@ -15,11 +15,11 @@ use yii\widgets\ActiveForm;
 
     <h3 class="heading">เพิ่มรายการสั่งซื้อ</h3>
 
-    <?= $form->field($model, 'barcode')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($model, 'barcode')->textInput(['autofocus' => true, 'autocomplete' => 'off']) ?>
 
 
     <div class="form-group">
-        <?= Html::submitButton(FA::icon('plus').' เลือกซื้อ', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(FA::icon('plus') . ' เลือกซื้อ', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
