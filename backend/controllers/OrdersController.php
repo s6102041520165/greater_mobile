@@ -60,7 +60,7 @@ class OrdersController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findOrder($id),
         ]);
     }
 
@@ -159,12 +159,10 @@ class OrdersController extends Controller
                 $orderDetail->setAttribute('product_id',$data->product_id);
                 $orderDetail->setAttribute('quantity',$data->quantity);
                 $orderDetail->save();
+                Cart::deleteAll(['cart.created_by' => Yii::$app->user->id]);
                //var_dump();die();
             }
-        } else {
-            var_dump($orderModel);
-            die();
-        }
+        } 
         return $this->redirect(['index']);
     }
 
@@ -175,11 +173,18 @@ class OrdersController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionOrderDelete($id)
     {
         $this->findModel($id)->delete();
 
         return $this->redirect(['create']);
+    }
+
+    public function actionDelete($id)
+    {
+        $this->findOrder($id)->delete();
+
+        return $this->redirect(['index']);
     }
 
     /**
@@ -189,6 +194,16 @@ class OrdersController extends Controller
      * @return Orders the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+    protected function findOrder($id)
+    {
+        if (($model = Orders::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
     protected function findModel($id)
     {
         if (($model = Cart::findOne($id)) !== null) {
