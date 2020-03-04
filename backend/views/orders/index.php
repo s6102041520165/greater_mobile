@@ -34,9 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'label' => 'ชื่อ - สกุล',
                         'attribute' => 'customer_id',
-                        'value' => function($data){
-                            return $data->customer['first_name']." ".$data->customer['last_name'];
-                        }
+                        'value' => 'customer.first_name'
                     ],
                     'created_at:relativeTime',
                     //'updated_at:relativeTime',

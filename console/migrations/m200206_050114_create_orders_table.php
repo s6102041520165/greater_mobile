@@ -20,7 +20,7 @@ class m200206_050114_create_orders_table extends Migration
         $this->createTable('{{%orders}}', [
             'id' => $this->primaryKey()->notNull(),
             'sumtotal' => $this->float(2)->notNull(),
-            'customer_id' => $this->integer()->notNull(),
+            'customer_id' => $this->integer(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
             'created_by' => $this->integer()->notNull(),

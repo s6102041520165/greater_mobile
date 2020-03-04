@@ -31,7 +31,7 @@ class OrderDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['orders_id', 'product_id', 'quantity'], 'required'],
+            [['product_id', 'quantity'], 'required'],
             [['orders_id', 'product_id', 'quantity'], 'integer'],
             [['orders_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['orders_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],

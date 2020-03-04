@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\Cart;
+use backend\models\OrderDetail;
 use Yii;
 use backend\models\Orders;
 use backend\models\OrdersSearch;
@@ -29,6 +30,7 @@ class OrdersController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'checkout' => ['POST'],
                 ],
             ],
         ];
@@ -101,7 +103,7 @@ class OrdersController extends Controller
                     $cart->product_id = $product->id;
                     $cart->quantity = 1;
                 }
-    
+
                 $cart->save();
             } catch (Exception $e) {
                 Yii::$app->session->setFlash('warning', 'ไม่พบสินค้ารหัสบาร์โค๊ด ' . $model->barcode);
@@ -128,13 +130,42 @@ class OrdersController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if($model->quantity == 0){
+            if ($model->quantity == 0) {
                 $this->findModel($model->id)->delete();
             }
             return $this->redirect(['create']);
         }
 
         return $this->redirect(['create']);
+    }
+
+    public function actionCheckout()
+    {
+        //เอาข้อมูลใน Cart มา
+        $cart = Cart::find()->joinWith(['product'])->where(['cart.created_by' => Yii::$app->user->id])->all();
+        //ราคารวมของ User คนที่สั่งซื้อ
+        $sumtotal = 0;
+        foreach ($cart as $data) {
+            $sumtotal +=  $data->product['price'] * $data->quantity;
+        }
+        //Saving Order
+        $orderModel = new Orders();
+
+        $orderModel->setAttribute('sumtotal',$sumtotal);
+        if ($orderModel->save()) {
+            foreach ($cart as $data) {
+                $orderDetail = new OrderDetail();
+                $orderDetail->setAttribute('orders_id',$orderModel->id);
+                $orderDetail->setAttribute('product_id',$data->product_id);
+                $orderDetail->setAttribute('quantity',$data->quantity);
+                $orderDetail->save();
+               //var_dump();die();
+            }
+        } else {
+            var_dump($orderModel);
+            die();
+        }
+        return $this->redirect(['index']);
     }
 
     /**
