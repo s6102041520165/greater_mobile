@@ -34,7 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'label' => 'ชื่อ - สกุล',
                         'attribute' => 'customer_id',
-                        'value' => 'customer.first_name'
+                        'value' => function ($data) {
+                            return ($data->customer != null) ? $data->customer['first_name'] . " " . $data->customer['last_name'] : "ไม่ได้ตั้ง";
+                        }
                     ],
                     'created_at:relativeTime',
                     //'updated_at:relativeTime',
@@ -43,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     [
                         'class' => 'yii\grid\ActionColumn',
+                        'template' => '{view} {delete}'
                     ],
                 ],
             ]); ?>
