@@ -21,7 +21,8 @@
         "dmstr/yii2-adminlte-asset": "^2.1",
         "rmrevin/yii2-fontawesome": "2.10.*",
         "kartik-v/yii2-mpdf": "dev-master",
-        "lavrentiev/yii2-toastr": "^2.0"
+        "lavrentiev/yii2-toastr": "^2.0",
+        "yiisoft/yii2-bootstrap4": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
