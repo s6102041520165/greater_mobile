@@ -38,9 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     'barcode',
                     [
                         'attribute' => 'picture',
-                        'format' => ['image', ['width' => '250px']],
+                        'format' => 'raw',
                         'value' => function ($data) {
-                            return $data->picture;
+                            return '<img src="' . Yii::getAlias('@web/../../image/') . $data->picture . '" width="250" /> ';
                         }
                     ],
                     //'stock',

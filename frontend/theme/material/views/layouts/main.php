@@ -2,7 +2,9 @@
 
 // This is Nikom Theme for Nikom Office
 
+use app\models\Category;
 use frontend\theme\material\MaterialAsset;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -33,7 +35,7 @@ $asset_path = Yii::$app->assetManager->getPublishedUrl('@frontend/theme/material
 <body class="avoid-fout page-blue">
     <?php $this->beginBody() ?>
     <div class="header">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -41,25 +43,47 @@ $asset_path = Yii::$app->assetManager->getPublishedUrl('@frontend/theme/material
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <li class="nav-item">
+                        <?= Html::a('หน้าแรก', Url::to(['/site/index']), ['class' => 'nav-link']) ?>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            สินค้า
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <?= Html::a('ทั้งหมด', Url::to(['/product/index']), ['class' => 'dropdown-item']) ?>
+                            <?php $data = ArrayHelper::map(Category::find()->asArray()->all(), 'id', 'name') ?>
+                            <?php 
+                            foreach ($data as $key => $value) {
+                                echo Html::a($value, Url::to(['/product/index', 'category' => $key]), ['class' => 'dropdown-item']);
+                            }
+                            ?>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <?= Html::a('ตะกร้าสินค้า', Url::to(['/site/index']), ['class' => 'nav-link']) ?>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                        <?= Html::a('ประวัติการสั่่งซื้อ', Url::to(['/site/index']), ['class' => 'nav-link']) ?>
                     </li>
                 </ul>
                 <div class="form-inline my-2 my-lg-0">
-                    Haha
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <?= (Yii::$app->user->isGuest) ?
+                            Html::a('ลงทะเบียน', Url::to(['/site/signup']), ['class' => 'btn btn-default']) .
+                            Html::a('เข้าสู่ระบบ', Url::to(['/site/login']), ['class' => 'btn btn-default'])
+                            : Html::a('ออกจากระบบ', Url::to(['/site/signout']), ['class' => 'btn btn-danger', 'data-mothod' => 'post'])
+                        ?>
+                    </div>
                 </div>
             </div>
         </nav>
     </div>
 
     <div class="content">
-        <?= $content; ?>
+        <div class="container-fluid">
+            <?= $content; ?>
+        </div>
     </div>
     <footer class="footer">
         <div class="container">

@@ -17,7 +17,7 @@ class UploadSingleForm extends Model {
     public function upload()
     {  
         $path = 'products/' . $this->imageFile->baseName. '.' . $this->imageFile->extension;
-        $this->imageFile->saveAs(Yii::getAlias('@webroot').'/'.$path);
+        $this->imageFile->saveAs(Yii::getAlias('@webroot').'../../image/'.$path);
         return $path;
     }
 
