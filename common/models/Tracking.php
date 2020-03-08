@@ -30,7 +30,8 @@ class Tracking extends \yii\db\ActiveRecord
     {
         return [
             [['order_id', 'barcode'], 'required'],
-            [['order_id', 'barcode'], 'integer'],
+            [['order_id'], 'integer'],
+            [['barcode'], 'string', 'min' => 10],
             [['barcode'], 'unique'],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'id']],
         ];

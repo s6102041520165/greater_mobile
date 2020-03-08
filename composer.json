@@ -22,7 +22,8 @@
         "rmrevin/yii2-fontawesome": "2.10.*",
         "kartik-v/yii2-mpdf": "dev-master",
         "lavrentiev/yii2-toastr": "^2.0",
-        "yiisoft/yii2-bootstrap4": "^2.0"
+        "yiisoft/yii2-bootstrap4": "^2.0",
+        "kartik-v/yii2-widgets": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

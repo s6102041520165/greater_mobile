@@ -19,7 +19,7 @@ class m200206_053045_create_tracking_table extends Migration
         $this->createTable('{{%tracking}}', [
             'id' => $this->primaryKey(),
             'order_id' => $this->integer()->notNull(),
-            'barcode' => $this->integer()->notNull()->unique(),
+            'barcode' => $this->string(25)->notNull()->unique(),
         ], $tableOptions);
 
         $this->addForeignKey(

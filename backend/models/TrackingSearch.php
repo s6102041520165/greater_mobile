@@ -17,7 +17,8 @@ class TrackingSearch extends Tracking
     public function rules()
     {
         return [
-            [['id', 'order_id', 'barcode'], 'integer'],
+            [['id', 'order_id'], 'integer'],
+            [['barcode'],'string'],
         ];
     }
 
