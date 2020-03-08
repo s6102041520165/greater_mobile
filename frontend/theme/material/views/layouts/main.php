@@ -61,7 +61,7 @@ $asset_path = Yii::$app->assetManager->getPublishedUrl('@frontend/theme/material
                         </div>
                     </li>
                     <li class="nav-item">
-                        <?= Html::a('ตะกร้าสินค้า', Url::to(['/site/index']), ['class' => 'nav-link']) ?>
+                        <?= Html::a('ตะกร้าสินค้า', Url::to(['/cart/index']), ['class' => 'nav-link']) ?>
                     </li>
                     <li class="nav-item">
                         <?= Html::a('ประวัติการสั่่งซื้อ', Url::to(['/site/index']), ['class' => 'nav-link']) ?>
