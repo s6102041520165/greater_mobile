@@ -29,6 +29,133 @@ $asset_path = Yii::$app->assetManager->getPublishedUrl('@frontend/theme/material
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <style>
+        /* Sticky footer styles
+-------------------------------------------------- */
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            margin-bottom: 60px;
+            /* Margin bottom by footer height */
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            /* Set the fixed height of the footer here */
+            line-height: 60px;
+            /* Vertically center the text there */
+            background-color: #f5f5f5;
+            border-top: 1px solid #ddd;
+        }
+
+        .jumbotron {
+            text-align: center;
+            background-color: transparent;
+        }
+
+        .jumbotron .btn {
+            font-size: 21px;
+            padding: 14px 24px;
+        }
+
+        .not-set {
+            color: #c55;
+            font-style: italic;
+        }
+
+        /* add sorting icons to gridview sort links */
+        a.asc:after,
+        a.desc:after {
+            position: relative;
+            top: 1px;
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            font-style: normal;
+            font-weight: normal;
+            line-height: 1;
+            padding-left: 5px;
+        }
+
+        a.asc:after {
+            content: "\e151";
+        }
+
+        a.desc:after {
+            content: "\e152";
+        }
+
+        .sort-numerical a.asc:after {
+            content: "\e153";
+        }
+
+        .sort-numerical a.desc:after {
+            content: "\e154";
+        }
+
+        .sort-ordinal a.asc:after {
+            content: "\e155";
+        }
+
+        .sort-ordinal a.desc:after {
+            content: "\e156";
+        }
+
+        .grid-view td {
+            white-space: nowrap;
+        }
+
+        .grid-view .filters input,
+        .grid-view .filters select {
+            min-width: 50px;
+        }
+
+        .hint-block {
+            display: block;
+            margin-top: 5px;
+            color: #999 !important;
+        }
+
+        .error-summary {
+            color: #a94442 !important;
+            background: #fdf7f7;
+            border-left: 3px solid #eed3d7;
+            padding: 10px 20px;
+            margin: 0 0 15px 0;
+        }
+        .help-block-error{
+            color: red;
+        }
+
+        /* align the logout "link" (button in form) of the navbar */
+        .nav li>form>button.logout {
+            padding: 15px;
+            border: none;
+        }
+
+        @media(max-width:767px) {
+            .nav li>form>button.logout {
+                display: block;
+                text-align: left;
+                width: 100%;
+                padding: 10px 15px;
+            }
+        }
+
+        .nav>li>form>button.logout:focus,
+        .nav>li>form>button.logout:hover {
+            text-decoration: none;
+        }
+
+        .nav>li>form>button.logout:focus {
+            outline: none;
+        }
+    </style>
 
 </head>
 
@@ -53,7 +180,7 @@ $asset_path = Yii::$app->assetManager->getPublishedUrl('@frontend/theme/material
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <?= Html::a('ทั้งหมด', Url::to(['/product/index']), ['class' => 'dropdown-item']) ?>
                             <?php $data = ArrayHelper::map(Category::find()->asArray()->all(), 'id', 'name') ?>
-                            <?php 
+                            <?php
                             foreach ($data as $key => $value) {
                                 echo Html::a($value, Url::to(['/product/index', 'category' => $key]), ['class' => 'dropdown-item']);
                             }
@@ -72,7 +199,7 @@ $asset_path = Yii::$app->assetManager->getPublishedUrl('@frontend/theme/material
                         <?= (Yii::$app->user->isGuest) ?
                             Html::a('ลงทะเบียน', Url::to(['/site/signup']), ['class' => 'btn btn-default']) .
                             Html::a('เข้าสู่ระบบ', Url::to(['/site/login']), ['class' => 'btn btn-default'])
-                            : Html::a('ออกจากระบบ', Url::to(['/site/signout']), ['class' => 'btn btn-danger', 'data-mothod' => 'post'])
+                            : Html::a('ออกจากระบบ', Url::to(['/site/logout']), ['class' => 'btn btn-danger', 'data-method' => 'post'])
                         ?>
                     </div>
                 </div>
@@ -86,10 +213,11 @@ $asset_path = Yii::$app->assetManager->getPublishedUrl('@frontend/theme/material
         </div>
     </div>
     <footer class="footer">
-        <div class="container">
-            <p>
-                <?= Yii::$app->name; ?>
-            </p>
+        <div class="container-fluid">
+            <span class="text-muted">
+                <span class="float-left">Powered By <?= Yii::$app->name; ?></span>
+                <span class="float-right"> Version 1.0</span>
+            </span>
         </div>
     </footer>
 
