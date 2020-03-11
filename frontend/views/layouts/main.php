@@ -9,6 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use frontend\models\Customer;
 
 AppAsset::register($this);
 ?>
@@ -41,23 +42,32 @@ AppAsset::register($this);
         $menuItems = [
             ['label' => 'หน้าแรก', 'url' => ['/site/index']],
             ['label' => 'สินค้า', 'url' => ['/product/index']],
-            ['label' => 'ตะกร้าสินค้า', 'url' => ['/cart/index'], 'visible' => !Yii::$app->user->isGuest],
-            ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/site/order'], 'visible' => !Yii::$app->user->isGuest],
-            ['label' => 'แจ้งชำระเงิน', 'url' => ['/payment/index'], 'visible' => !Yii::$app->user->isGuest],
             ['label' => 'ติดต่อเรา', 'url' => ['/site/contact']],
+
         ];
         if (Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => 'ลงทะเบียน', 'url' => ['/site/signup']];
             $menuItems[] = ['label' => 'เข้าสู่ระบบ', 'url' => ['/site/login']];
         } else {
-            $menuItems[] = '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'ออกจากระบบ (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>';
+            $customer = Customer::findOne(['user_id' => Yii::$app->user->id]);
+            $isUserProfile = (empty($customer->user_id) || is_null($customer->user_id));
+            $nameProfiles = ($isUserProfile) ? "ไม่มีข้อมูลส่วนตัว" : $customer->first_name . " " . $customer->last_name;
+            $menuItems[] =
+                [
+                    'label' => 'ข้อมูลส่วนตัวของฉัน',
+                    'items' => [
+                        '<li class="divider"></li>',
+                        "<li class=\"dropdown-header\">การสั่งซื้อของฉัน</li>",
+                        ['label' => 'ตะกร้าสินค้า', 'url' => ['/cart/index'], 'visible' => !Yii::$app->user->isGuest],
+                        ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/site/order'], 'visible' => !Yii::$app->user->isGuest],
+                        ['label' => 'แจ้งชำระเงิน', 'url' => ['/payment/index'], 'visible' => !Yii::$app->user->isGuest],
+                        '<li class="divider"></li>',
+                        "<li class=\"dropdown-header\">$nameProfiles</li>",
+                        ['label' => 'เพิ่มข้อมูลส่วนตัว', 'url' => ['/customer/create'], 'visible' => $isUserProfile],
+                        ['label' => 'แก้ไขข้อมูลส่วนตัว', 'url' => ['/customer/update', 'id' => $customer->id], 'visible' => !$isUserProfile],
+                        ['label' => 'ออกจากระบบ', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post'],],
+                    ],
+                ];
         }
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
