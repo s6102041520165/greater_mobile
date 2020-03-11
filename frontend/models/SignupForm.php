@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\models;
 
 use Yii;
@@ -56,16 +57,23 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
+
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        $user->status = $user::STATUS_ACTIVE;
-        //$user->generateEmailVerificationToken();
-        return $user->save(); //&& $this->sendEmail($user);
+        //$user->status = $user::STATUS_ACTIVE;
+        $user->generateEmailVerificationToken();
+        $user->save(); //&& $this->sendEmail($user);
 
+        if ($user->id > 1) {
+            $auth = Yii::$app->authManager;
+            $authorRole = $auth->getRole('customer');
+            $auth->assign($authorRole, $user->getId());
+        }
+
+        return $user;
     }
 
     /**
@@ -81,7 +89,7 @@ class SignupForm extends Model
                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
             ->setTo($this->email)
             ->setSubject('Account registration at ' . Yii::$app->name)
             ->send();

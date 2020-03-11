@@ -25,6 +25,7 @@ class m200206_050114_create_orders_table extends Migration
             'updated_at' => $this->integer()->notNull(),
             'created_by' => $this->integer()->notNull(),
             'updated_by' => $this->integer()->notNull(),
+            'status' => $this->integer()->defaultValue(9),
         ], $tableOptions);
     }
 
