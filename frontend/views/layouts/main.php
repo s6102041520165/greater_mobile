@@ -41,9 +41,9 @@ AppAsset::register($this);
         $menuItems = [
             ['label' => 'หน้าแรก', 'url' => ['/site/index']],
             ['label' => 'สินค้า', 'url' => ['/product/index']],
-            ['label' => 'ตะกร้าสินค้า', 'url' => ['/cart/index']],
-            ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/site/order']],
-            ['label' => 'แจ้งชำระเงิน', 'url' => ['/payment/index']],
+            ['label' => 'ตะกร้าสินค้า', 'url' => ['/cart/index'], 'visible' => !Yii::$app->user->isGuest],
+            ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/site/order'], 'visible' => !Yii::$app->user->isGuest],
+            ['label' => 'แจ้งชำระเงิน', 'url' => ['/payment/index'], 'visible' => !Yii::$app->user->isGuest],
             ['label' => 'ติดต่อเรา', 'url' => ['/site/contact']],
         ];
         if (Yii::$app->user->isGuest) {
@@ -72,7 +72,8 @@ AppAsset::register($this);
                     <?= Breadcrumbs::widget([
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                     ]) ?>
-                    <?php //echo Alert::widget() ?>
+                    <?php //echo Alert::widget() 
+                    ?>
                     <?php $this->render('alert.php') ?>
                     <?= $content ?>
                 </div>
