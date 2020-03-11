@@ -42,6 +42,7 @@ class Product extends \yii\db\ActiveRecord
             [['price'], 'number'],
             [['stock', 'created_by', 'created_at', 'updated_by', 'updated_at', 'category_id'], 'integer'],
             [['name', 'barcode'], 'string', 'max' => 100],
+            [['barcode'],'match', 'pattern'=>'/[\u0030-\u0074]/u', 'skipOnError'=>true],
             [['description', 'picture'], 'string', 'max' => 255],
         ];
     }

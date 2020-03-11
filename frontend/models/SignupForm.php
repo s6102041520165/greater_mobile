@@ -37,6 +37,15 @@ class SignupForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'ชื่อผู้ใช้',
+            'password' => 'รหัสผ่าน',
+            'email' => 'อีเมล'
+        ];
+    }
+
     /**
      * Signs user up.
      *

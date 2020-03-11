@@ -4,6 +4,7 @@
 
 use app\models\Category;
 use frontend\theme\material\MaterialAsset;
+use yii\bootstrap4\Alert as Bootstrap4Alert;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -128,7 +129,9 @@ $asset_path = Yii::$app->assetManager->getPublishedUrl('@frontend/theme/material
             padding: 10px 20px;
             margin: 0 0 15px 0;
         }
-        .help-block,.help-block-error{
+
+        .help-block,
+        .help-block-error {
             color: red;
         }
 
@@ -213,7 +216,9 @@ $asset_path = Yii::$app->assetManager->getPublishedUrl('@frontend/theme/material
         </nav>
     </div>
 
+
     <div class="content">
+       
         <div class="container-fluid">
             <?= $content; ?>
         </div>

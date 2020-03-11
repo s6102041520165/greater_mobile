@@ -35,21 +35,25 @@ AppAsset::register($this);
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-inverse navbar-fixed-top',
+                'style' => 'background-color:#9c27b0; color: #ffffff'
             ],
         ]);
         $menuItems = [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'หน้าแรก', 'url' => ['/site/index']],
+            ['label' => 'สินค้า', 'url' => ['/product/index']],
+            ['label' => 'ตะกร้าสินค้า', 'url' => ['/cart/index']],
+            ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/site/order']],
+            ['label' => 'แจ้งชำระเงิน', 'url' => ['/payment/index']],
+            ['label' => 'ติดต่อเรา', 'url' => ['/site/contact']],
         ];
         if (Yii::$app->user->isGuest) {
-            $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-            $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+            $menuItems[] = ['label' => 'ลงทะเบียน', 'url' => ['/site/signup']];
+            $menuItems[] = ['label' => 'เข้าสู่ระบบ', 'url' => ['/site/login']];
         } else {
             $menuItems[] = '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'ออกจากระบบ (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
@@ -62,12 +66,9 @@ AppAsset::register($this);
         NavBar::end();
         ?>
 
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
-                <div class="col-lg-2">
-                    Menu
-                </div>
-                <div class="col-lg-10">
+                <div class="col-lg-12">
                     <?= Breadcrumbs::widget([
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                     ]) ?>
@@ -84,7 +85,7 @@ AppAsset::register($this);
         <div class="container">
             <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
-            <p class="pull-right"><?= Yii::powered() ?></p>
+            <p class="pull-right"><?= "Version 1.0" ?></p>
         </div>
     </footer>
 

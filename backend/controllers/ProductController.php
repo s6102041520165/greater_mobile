@@ -68,8 +68,10 @@ class ProductController extends Controller
     {
         $model = new Product();
         $uploadSingleFile = new UploadSingleForm();
-        if($model->load(Yii::$app->request->post()) && Yii::$app->request->isPost){
+        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isPost) {
             $uploadSingleFile->imageFile = UploadedFile::getInstance($uploadSingleFile, 'imageFile');
+
+            //print_r($pos);die();
             //Upload file
             $picture = $uploadSingleFile->upload();
             //var_dump($picture);die();
@@ -77,11 +79,10 @@ class ProductController extends Controller
                 //Uploaded successfully
                 $model->picture = $picture;
                 //var_dump($model->picture);die();
-                
+
                 $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-            
         }
 
         return $this->render('create', [

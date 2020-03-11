@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
-$this->title = 'Contact';
+$this->title = 'ติดต่อเรา';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-contact">
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                    <?= Html::submitButton('ส่งข้อมูล', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>

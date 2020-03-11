@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'picture',
                 'format' => ['image',['width'=>'500px']], 
                 'value ' => function($data){
-                    return('@web/'.$data->picture);
+                    return('@web/../../../'.$data->picture);
                 }
             ],
             'stock',

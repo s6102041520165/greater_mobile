@@ -8,10 +8,40 @@ use frontend\models\Cart;
 use frontend\models\ProductSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 
 class ProductController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['cart', 'confirm'],
+                'rules' => [
+                    /* [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ], */
+                    [
+                        'actions' => ['cart', 'confirm'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex($category = null)
     {
         $searchModel = new ProductSearch();
@@ -21,7 +51,7 @@ class ProductController extends \yii\web\Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-        
+
         return $this->render('index', ['dataProvider' => $dataProvider]);
     }
 
@@ -52,7 +82,7 @@ class ProductController extends \yii\web\Controller
             Yii::$app->session->setFlash('warning', 'ไม่พบสินค้า ' . $modelProduct->barcode);
         }
 
-        return $this->goBack();
+        return $this->redirect(['/cart/index']);
     }
 
     protected function findModel($id)

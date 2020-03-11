@@ -75,6 +75,17 @@ class CartController extends Controller
         ]);
     }
 
+    public function actionConfirm()
+    {
+        $searchModel = new CartSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('confirm', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Updates an existing Cart model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -87,7 +98,7 @@ class CartController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
