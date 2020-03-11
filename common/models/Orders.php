@@ -35,7 +35,7 @@ class Orders extends \yii\db\ActiveRecord
         return [
             [['sumtotal'], 'required'],
             [['sumtotal'], 'number'],
-            [['customer_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['customer_id', 'created_at', 'updated_at', 'created_by', 'updated_by','status'], 'integer'],
         ];
     }
 
@@ -45,7 +45,7 @@ class Orders extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'รหัส',
+            'id' => 'เลขที่ใบสั่งซื้อ',
             'sumtotal' => 'ราคารวม',
             'customer_id' => 'ลูกค้า',
             'created_at' => 'สั่งซื้อเมื่อ',

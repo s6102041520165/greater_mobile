@@ -3,14 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Payment */
+/* @var $model frontend\models\Payment */
 
-$this->title = 'Update Payment: ' . $model->id;
+$this->title = 'แจ้งชำระเงิน';
 $this->params['breadcrumbs'][] = ['label' => 'แจ้งชำระเงิน', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="payment-update">
+<div class="payment-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

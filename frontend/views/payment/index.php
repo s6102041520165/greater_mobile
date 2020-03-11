@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\PaymentSearch */
+/* @var $searchModel frontend\models\PaymentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'แจ้งชำระเงิน';
@@ -12,6 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="payment-index">
 
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('แจ้งชำระเงิน', ['create'], ['class' => 'btn btn-success']) ?>
@@ -26,14 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'order_id',
             'bank',
             'location',
             'amount',
-            //'date_pay',
+            'date_pay',
             //'time_pay',
-            //'status',
+            'status',
             //'image',
 
             ['class' => 'yii\grid\ActionColumn'],

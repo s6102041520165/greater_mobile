@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Product;
 use Exception;
 use frontend\models\Cart;
+use frontend\models\ProductSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
@@ -13,12 +14,14 @@ class ProductController extends \yii\web\Controller
 {
     public function actionIndex($category = null)
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Product::find(),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
+        
         return $this->render('index', ['dataProvider' => $dataProvider]);
     }
 

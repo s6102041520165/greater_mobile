@@ -128,7 +128,7 @@ $asset_path = Yii::$app->assetManager->getPublishedUrl('@frontend/theme/material
             padding: 10px 20px;
             margin: 0 0 15px 0;
         }
-        .help-block-error{
+        .help-block,.help-block-error{
             color: red;
         }
 
@@ -191,7 +191,13 @@ $asset_path = Yii::$app->assetManager->getPublishedUrl('@frontend/theme/material
                         <?= Html::a('ตะกร้าสินค้า', Url::to(['/cart/index']), ['class' => 'nav-link']) ?>
                     </li>
                     <li class="nav-item">
-                        <?= Html::a('ประวัติการสั่่งซื้อ', Url::to(['/site/index']), ['class' => 'nav-link']) ?>
+                        <?= Html::a('ประวัติการสั่่งซื้อ', Url::to(['/site/orders']), ['class' => 'nav-link']) ?>
+                    </li>
+                    <li class="nav-item">
+                        <?= Html::a('ติดตามพัสดุ', Url::to(['/site/tracking']), ['class' => 'nav-link']) ?>
+                    </li>
+                    <li class="nav-item">
+                        <?= Html::a('แจ้งชำระเงิน', Url::to(['/payment/index']), ['class' => 'nav-link']) ?>
                     </li>
                 </ul>
                 <div class="form-inline my-2 my-lg-0">

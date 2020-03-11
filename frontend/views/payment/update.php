@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Payment */
+/* @var $model frontend\models\Payment */
 
 $this->title = 'Update Payment: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'แจ้งชำระเงิน', 'url' => ['index']];

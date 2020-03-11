@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Payment */
 
-$this->title = 'Create Payment';
-$this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
+$this->title = 'แจ้งชำระเงิน';
+$this->params['breadcrumbs'][] = ['label' => 'แจ้งชำระเงิน', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="payment-create">
