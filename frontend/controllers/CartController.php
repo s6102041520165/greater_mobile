@@ -5,6 +5,12 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Cart;
 use app\models\CartSearch;
+use frontend\models\Customer;
+use frontend\models\CustomerSearch;
+use frontend\models\OrderDetail;
+use frontend\models\Orders;
+use frontend\models\Product;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -24,6 +30,16 @@ class CartController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','create','update','delete','view','confirm'],
+                        'roles' => ['@','reserveCart'],
+                    ],
                 ],
             ],
         ];
@@ -66,23 +82,70 @@ class CartController extends Controller
     {
         $model = new Cart();
 
+        $searchModel = new CartSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
+        return $this->render('confirm', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
             'model' => $model,
         ]);
     }
 
     public function actionConfirm()
     {
+
+        $id = Yii::$app->user->id;
+        $model = Customer::findOne(['user_id' => $id]); //User 
+
         $searchModel = new CartSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        //ถ้ามีการเปลี่ยนแปลงข้อมูลส่วนตัวให้บันทึกข้อมูลก่อน
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //เอาข้อมูลใน Cart มา
+            $cart = Cart::find()->joinWith(['product'])->where(['cart.created_by' => Yii::$app->user->id])->all();
+            //ราคารวมของ User คนที่สั่งซื้อ
+            $sumtotal = 0;
+            foreach ($cart as $data) {
+                $sumtotal +=  $data->product['price'] * $data->quantity;
+            }
+            //Saving Order
+            $orderModel = new Orders();
+
+            $orderModel->setAttribute('sumtotal', $sumtotal);
+            $orderModel->setAttribute('customer_id', $model->id);
+            if ($orderModel->save()) {
+                foreach ($cart as $data) {
+                    /**Orders Detail set values */
+                    $orderDetail = new OrderDetail();
+                    $orderDetail->setAttribute('orders_id', $orderModel->id);
+                    $orderDetail->setAttribute('product_id', $data->product_id);
+                    $orderDetail->setAttribute('quantity', $data->quantity);
+                    /**Insert order detail table */
+                    $orderDetail->save();
+
+                    /**Decrement stock and update product table*/
+                    $modelProduct = Product::findOne(['id' => $data->product_id]);
+                    $modelProduct->setAttribute('stock',(int)($modelProduct->stock - $data->quantity));
+                    $modelProduct->save();
+
+                    /**Deleted all product in cart */
+                    Cart::deleteAll(['cart.created_by' => Yii::$app->user->id]);
+                }
+
+                Yii::$app->session->setFlash('success','บันทึกรายการที่คุณสั่งซื้อสำเร็จ');
+            }
+            return $this->redirect(['/orders/index']);
+        }
+
         return $this->render('confirm', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 

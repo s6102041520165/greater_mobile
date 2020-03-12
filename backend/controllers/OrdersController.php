@@ -11,6 +11,7 @@ use backend\models\Product;
 use Exception;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -31,6 +32,16 @@ class OrdersController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                     'checkout' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','create','update','delete','view','checkout','order-delete'],
+                        'roles' => ['@','manageOrder'],
+                    ],
                 ],
             ],
         ];

@@ -1,5 +1,7 @@
 <?php
 
+use kartik\form\ActiveForm;
+use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -15,9 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
 
-    <?php Pjax::begin(); ?>
-    <?php //echo $this->render('_search', ['model' => $searchModel]); 
-    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -52,9 +51,56 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-    <?php Pjax::end(); ?>
-    <div class="text-right">
-        <?= Html::a('ขั้นตอนถัดไป >>', ['cart/confirm'], ['class' => 'btn btn-primary float-right btn-lg']) ?>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            ข้อมูลลูกค้า
+        </div>
+        <div class="panel-body">
+            <?php $form = ActiveForm::begin(); ?>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
+
+                </div>
+
+                <div class="col-lg-6">
+                    <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
+                </div>
+
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'district')->textInput(['maxlength' => true]) ?>
+                </div>
+
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'amphoe')->textInput(['maxlength' => true]) ?>
+                </div>
+
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'province')->textInput(['maxlength' => true]) ?>
+                </div>
+
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'zipcode')->textInput(['maxlength' => true]) ?>
+
+                </div>
+
+                <div class="col-lg-12">
+                    <?= $form->field($model, 'telephone')->textInput(['maxlength' => true]) ?>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <div class="text-center">
+                            <?= Html::submitButton(FA::icon('shopping-cart').' ยืนยันการสั่งซื้อ', ['class' => 'btn btn-primary']) ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
+
 
 </div>

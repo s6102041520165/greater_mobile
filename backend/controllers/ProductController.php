@@ -6,6 +6,7 @@ use Yii;
 use backend\models\Product;
 use backend\models\ProductSearch;
 use backend\models\UploadSingleForm;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,16 @@ class ProductController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','create','update','delete','view'],
+                        'roles' => ['@','manageProduct'],
+                    ],
                 ],
             ],
         ];

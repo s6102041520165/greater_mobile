@@ -52,6 +52,7 @@ class Orders extends \yii\db\ActiveRecord
             'updated_at' => 'แก้ไขเมื่อ',
             'created_by' => 'สั่งซื้อโดย',
             'updated_by' => 'แก้ไขโดย',
+            'status' => 'สถานะการสั่งซื้อ'
         ];
     }
 

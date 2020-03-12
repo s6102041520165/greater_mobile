@@ -44,10 +44,10 @@ class OrderDetail extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'orders_id' => 'Orders ID',
-            'product_id' => 'Product ID',
-            'quantity' => 'Quantity',
+            'id' => 'รหัสอ้างอิง',
+            'orders_id' => 'เลขที่ใบสั่งซื้อ',
+            'product_id' => 'รายการสินค้าที่สั่งซื้อ',
+            'quantity' => 'จำนวนที่สั่งซื้อ',
         ];
     }
 
@@ -70,4 +70,5 @@ class OrderDetail extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
+
 }

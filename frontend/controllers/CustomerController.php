@@ -2,10 +2,11 @@
 
 namespace frontend\controllers;
 
-use backend\models\UploadSingleForm;
+use frontend\models\UploadSingleForm;
 use Yii;
 use frontend\models\Customer;
 use frontend\models\CustomerSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,16 @@ class CustomerController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create','update','view'],
+                        'roles' => ['@','manageProfile'],
+                    ],
                 ],
             ],
         ];
@@ -67,7 +78,7 @@ class CustomerController extends Controller
     public function actionCreate()
     {
         $model = new Customer();
-        
+
 
         $uploadSingleFile = new UploadSingleForm();
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isPost) {
@@ -82,16 +93,12 @@ class CustomerController extends Controller
                 $model->picture = $picture;
                 //var_dump($model->picture);die();
 
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id]);
+                if ($model->save())
+                    return $this->redirect(['view', 'id' => $model->id]);
             }
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
 
-        
         return $this->render('create', [
             'model' => $model,
             'imageModel' => $uploadSingleFile,
@@ -115,13 +122,13 @@ class CustomerController extends Controller
             $uploadSingleFile->imageFile = UploadedFile::getInstance($uploadSingleFile, 'imageFile');
 
             $picture = $uploadSingleFile->upload();
-            if($picture){
+            if ($picture) {
                 //Uploaded successfully
                 $model->picture = $picture;
                 //var_dump($model->picture);die();
 
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id]);
+                if($model->save())
+                    return $this->redirect(['view', 'id' => $model->id]);
             }
             //return $this->redirect(['view', 'id' => $model->id]);
         }

@@ -61,7 +61,7 @@ AppAsset::register($this);
                         '<li class="divider"></li>',
                         "<li class=\"dropdown-header\">การสั่งซื้อของฉัน</li>",
                         ['label' => 'ตะกร้าสินค้า', 'url' => ['/cart/index'], 'visible' => !Yii::$app->user->isGuest],
-                        ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/site/order'], 'visible' => !Yii::$app->user->isGuest],
+                        ['label' => 'ประวัติการสั่งซื้อ', 'url' => ['/orders/index'], 'visible' => !Yii::$app->user->isGuest],
                         ['label' => 'แจ้งชำระเงิน', 'url' => ['/payment/index'], 'visible' => !Yii::$app->user->isGuest],
                         '<li class="divider"></li>',
                         "<li class=\"dropdown-header\">$nameProfiles</li>",

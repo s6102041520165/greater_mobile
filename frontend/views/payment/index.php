@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -32,9 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'bank',
             'location',
             'amount',
-            'date_pay',
+            'date_pay:date',
             //'time_pay',
-            'status',
+            //'status',
             //'image',
 
             ['class' => 'yii\grid\ActionColumn'],

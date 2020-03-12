@@ -2,12 +2,15 @@
 
 namespace frontend\controllers;
 
+use backend\models\UploadSingleForm;
 use Yii;
 use frontend\models\Payment;
 use frontend\models\PaymentSearch;
+use frontend\models\UploadSlip;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * PaymentController implements the CRUD actions for Payment model.
@@ -65,6 +68,23 @@ class PaymentController extends Controller
     public function actionCreate()
     {
         $model = new Payment();
+        $uploadSingleFile = new UploadSlip();
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            $uploadSingleFile->imageFile = UploadedFile::getInstance($uploadSingleFile, 'imageFile');
+
+            $picture = $uploadSingleFile->upload();
+            if ($picture) {
+                //Uploaded successfully
+                $model->image = $picture;
+                //var_dump($model->picture);die();
+
+                if ($model->save())
+                    return $this->redirect(['view', 'id' => $model->id]);
+            }
+            //return $this->redirect(['view', 'id' => $model->id]);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,6 +92,7 @@ class PaymentController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'imageModel' => $uploadSingleFile
         ]);
     }
 
@@ -86,12 +107,27 @@ class PaymentController extends Controller
     {
         $model = $this->findModel($id);
 
+        $uploadSingleFile = new UploadSlip();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+            $uploadSingleFile->imageFile = UploadedFile::getInstance($uploadSingleFile, 'imageFile');
+
+            $picture = $uploadSingleFile->upload();
+            if ($picture) {
+                //Uploaded successfully
+                $model->image = $picture;
+                //var_dump($model->picture);die();
+
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            //return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'imageModel' => $uploadSingleFile,
         ]);
     }
 

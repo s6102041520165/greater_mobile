@@ -5,18 +5,18 @@ use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
 
-class UploadSingleForm extends Model {
+class UploadSlip extends Model {
     public $imageFile;
     
     public function rules() {
         return [
-            [['imageFile'], 'file', 'skipOnEmpty' => FALSE, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => TRUE, 'extensions' => 'png, jpg'],
         ];
     }
     
     public function upload()
     {  
-        $path = 'customer/' . time() . '.' . $this->imageFile->extension;
+        $path = 'slip/' . time() . '.' . $this->imageFile->extension;
         $this->imageFile->saveAs(Yii::getAlias('@webroot/../../image/').$path);
         return $path;
     }

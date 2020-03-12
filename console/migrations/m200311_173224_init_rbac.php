@@ -61,6 +61,16 @@ class m200311_173224_init_rbac extends Migration
         $manageUser->description = 'manageUser';
         $auth->add($manageUser);
 
+        //จัดการสินค้า
+        $manageProduct = $auth->createPermission('manageProduct');
+        $manageProduct->description = 'manageProduct';
+        $auth->add($manageProduct);
+
+        //จัดการประเภทสินค้า
+        $manageCategory = $auth->createPermission('manageCategory');
+        $manageCategory->description = 'manageCategory';
+        $auth->add($manageCategory);
+
 
         // add "customer" role and give this role the "manageProfile" permission
         $customer = $auth->createRole('customer');
@@ -82,6 +92,8 @@ class m200311_173224_init_rbac extends Migration
         $auth->addChild($employee, $viewBill);
         $auth->addChild($employee, $viewReport);  
         $auth->addChild($employee, $manageCustomer);
+        $auth->addChild($employee, $manageProduct);
+        $auth->addChild($employee, $manageCategory);
         $auth->addChild($employee, $activeOrder); 
         $auth->addChild($employee, $customer);//ทำทุกอย่างที่ลูกค้าทำได้  
 

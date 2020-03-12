@@ -29,15 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'description',
-            'price',
             [
                 'attribute' => 'picture',
-                'format' => ['image',['width'=>'500px']], 
+                'format' => 'raw',
                 'value ' => function($data){
-                    return('@web/../../../'.$data->picture);
+                    return "<img src='".Yii::getAlias('@web/../../image/'.$data->picture)."' style='width:500px;height:auto' />";
                 }
             ],
+            'description',
+            'price',
             'stock',
             [
                 'attribute' => 'created_by',
