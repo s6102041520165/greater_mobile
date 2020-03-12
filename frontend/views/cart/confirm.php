@@ -41,17 +41,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'quantity',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    return Html::beginForm(['cart/update', 'id' => $data->id]) .
-                        Html::activeTextInput($data, 'quantity', ['class' => 'form-control', 'style' => 'width:50px;']) .
-                        Html::submitButton('อัพเดท', ['class' => 'btn btn-primary']) .
-                        Html::endForm();
+                    return $data->quantity;
                 }
             ],
 
-            [
+            /*[
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{delete}'
-            ],
+            ],*/
         ],
     ]); ?>
 

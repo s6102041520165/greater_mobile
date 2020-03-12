@@ -13,6 +13,8 @@ use frontend\models\Customer;
 
 AppAsset::register($this);
 ?>
+<?php //var_dump(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id));die(); 
+?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
@@ -65,6 +67,9 @@ AppAsset::register($this);
                         "<li class=\"dropdown-header\">$nameProfiles</li>",
                         ['label' => 'เพิ่มข้อมูลส่วนตัว', 'url' => ['/customer/create'], 'visible' => $isUserProfile],
                         ['label' => 'แก้ไขข้อมูลส่วนตัว', 'url' => ['/customer/update', 'id' => $customer->id], 'visible' => !$isUserProfile],
+                        [
+                            'label' => 'ไปที่หลังร้าน', 'url' => Yii::$app->urlManagerBackend->createUrl(['site/index','id'=>4]), 'visible' => (!empty(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id)) && (Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id))->roleName === "admin")
+                        ],
                         ['label' => 'ออกจากระบบ', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post'],],
                     ],
                 ];

@@ -51,6 +51,18 @@ return [
             ],
         ],
         */
+        'urlManager' => [
+            'class' => 'yii\web\urlManager',
+            'enablePrettyUrl' => false,
+            'showScriptName' => true,
+        ],
+        'urlManagerBackend' => [
+            'class' => 'yii\web\urlManager',
+            'baseUrl' => '/greater_mobile/backend/web',
+            'scriptUrl' => '/greater_mobile/backend/web/index.php',
+            'enablePrettyUrl' => false,
+            'showScriptName' => true,
+        ],
     ],
     'params' => $params,
 ];

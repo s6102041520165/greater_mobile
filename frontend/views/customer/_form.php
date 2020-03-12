@@ -43,7 +43,7 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="col-lg-6">
-            <?= $form->field($model, 'picture')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($imageFile, 'imageFile')->fileInput() ?>
         </div>
 
         <div class="col-lg-12">

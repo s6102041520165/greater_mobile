@@ -14,6 +14,7 @@ $this->params['breadcrumbs'][] = 'แก้ไขข้อมูลส่วน�
 
     <?= $this->render('_form', [
         'model' => $model,
+        'imageFile' => $imageModel,
     ]) ?>
 
 </div>
