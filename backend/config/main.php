@@ -65,6 +65,7 @@ return [
             'enablePrettyUrl' => false,
             'showScriptName' => true,
         ],
+
     ],
     'params' => $params,
 ];

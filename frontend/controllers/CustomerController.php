@@ -34,8 +34,8 @@ class CustomerController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create','update','view'],
-                        'roles' => ['@','manageProfile'],
+                        'actions' => ['create', 'update', 'view'],
+                        'roles' => ['@', 'manageProfile'],
                     ],
                 ],
             ],
@@ -78,10 +78,9 @@ class CustomerController extends Controller
     public function actionCreate()
     {
         $model = new Customer();
-
-
         $uploadSingleFile = new UploadSingleForm();
-        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isPost) {
+
+        if ($model->load(Yii::$app->request->post())) {
             $uploadSingleFile->imageFile = UploadedFile::getInstance($uploadSingleFile, 'imageFile');
 
             //print_r($pos);die();
@@ -91,11 +90,13 @@ class CustomerController extends Controller
             if ($picture) {
                 //Uploaded successfully
                 $model->picture = $picture;
+                $model->user_id = Yii::$app->user->id;
                 //var_dump($model->picture);die();
-
                 if ($model->save())
                     return $this->redirect(['view', 'id' => $model->id]);
             }
+            var_dump($model);
+            die();
         }
 
 
@@ -117,7 +118,7 @@ class CustomerController extends Controller
         $model = $this->findModel($id);
         $uploadSingleFile = new UploadSingleForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
 
             $uploadSingleFile->imageFile = UploadedFile::getInstance($uploadSingleFile, 'imageFile');
 
@@ -127,9 +128,11 @@ class CustomerController extends Controller
                 $model->picture = $picture;
                 //var_dump($model->picture);die();
 
-                if($model->save())
-                    return $this->redirect(['view', 'id' => $model->id]);
             }
+            if ($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
+
+
             //return $this->redirect(['view', 'id' => $model->id]);
         }
 

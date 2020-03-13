@@ -33,7 +33,7 @@ class CategoryController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index','create','update','delete','view'],
-                        'roles' => ['@','manageProduct'],
+                        'roles' => ['manageCategory'],
                     ],
                 ],
             ],

@@ -36,7 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'province',
             'zipcode',
             'telephone',
-            'user_id',
         ],
     ]) ?>
 

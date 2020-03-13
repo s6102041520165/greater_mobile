@@ -1,24 +1,30 @@
 <?php
 
 namespace frontend\models;
+
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
 
-class UploadSingleForm extends Model {
+class UploadSingleForm extends Model
+{
     public $imageFile;
-    
-    public function rules() {
+
+    public function rules()
+    {
         return [
-            [['imageFile'], 'file', 'skipOnEmpty' => FALSE, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => TRUE, 'extensions' => 'png, jpg'],
         ];
     }
-    
+
     public function upload()
-    {  
-        $path = 'customer/' . time() . '.' . $this->imageFile->extension;
-        $this->imageFile->saveAs(Yii::getAlias('@webroot/../../image/').$path);
-        return $path;
+    {
+        if (isset($this->imageFile->extension)) {
+            $path = 'customer/' . time() . '.' . $this->imageFile->extension;
+            $this->imageFile->saveAs(Yii::getAlias('@webroot/../../image/') . $path);
+            return $path;
+        }
+        return false;
     }
 
     public function attributeLabels()
@@ -28,8 +34,3 @@ class UploadSingleForm extends Model {
         ];
     }
 }
-
-
-
-
-

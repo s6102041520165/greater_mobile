@@ -27,8 +27,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'telephone')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
-
     <div class="form-group">
         <?= Html::submitButton(FA::icon('plus').' บันทึก', ['class' => 'btn btn-success']) ?>
     </div>

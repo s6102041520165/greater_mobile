@@ -33,7 +33,7 @@ class TrackingController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index','create','update','delete','view'],
-                        'roles' => ['@','manageTracking'],
+                        'roles' => ['manageTracking'],
                     ],
                 ],
             ],

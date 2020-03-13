@@ -9,6 +9,9 @@ use backend\models\Orders;
 use backend\models\OrdersSearch;
 use backend\models\Product;
 use Exception;
+use kartik\mpdf\Pdf;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\filters\AccessControl;
@@ -32,6 +35,8 @@ class OrdersController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                     'checkout' => ['POST'],
+                    'active' => ['POST'],
+                    'inactive' => ['POST'],
                 ],
             ],
             'access' => [
@@ -39,8 +44,8 @@ class OrdersController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','create','update','delete','view','checkout','order-delete'],
-                        'roles' => ['@','manageOrder'],
+                        'actions' => ['index', 'create', 'update', 'delete', 'view', 'checkout', 'order-delete', 'active', 'receipt', 'inactive'],
+                        'roles' => ['manageOrder'],
                     ],
                 ],
             ],
@@ -162,19 +167,71 @@ class OrdersController extends Controller
         //Saving Order
         $orderModel = new Orders();
 
-        $orderModel->setAttribute('sumtotal',$sumtotal);
+        $orderModel->setAttribute('sumtotal', $sumtotal);
         if ($orderModel->save()) {
             foreach ($cart as $data) {
                 $orderDetail = new OrderDetail();
-                $orderDetail->setAttribute('orders_id',$orderModel->id);
-                $orderDetail->setAttribute('product_id',$data->product_id);
-                $orderDetail->setAttribute('quantity',$data->quantity);
+                $orderDetail->setAttribute('orders_id', $orderModel->id);
+                $orderDetail->setAttribute('product_id', $data->product_id);
+                $orderDetail->setAttribute('quantity', $data->quantity);
                 $orderDetail->save();
                 Cart::deleteAll(['cart.created_by' => Yii::$app->user->id]);
-               //var_dump();die();
+                //var_dump();die();
             }
-        } 
+        }
         return $this->redirect(['index']);
+    }
+
+    public function actionReceipt($id)
+    {
+        $model = $this->findOrder($id);
+
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $this->renderPartial('receipt', ['model' => $model]),
+            'options' => [
+                // any mpdf options you wish to set
+            ],
+            'methods' => [
+                'SetTitle' => 'พนักงาน ขสมก.',
+                'SetSubject' => 'รายชื่อและรหัสพนักงาน ขสมก',
+                //'SetHeader' => ['รายชื่อพนักงาน||Genarated: ' . date("r")],
+                //'SetFooter' => ['|Page {PAGENO}|'],
+            ]
+        ]);
+
+        $defaultConfig = (new ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+
+        $defaultFontConfig = (new FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $pdf->options['fontDir'] = array_merge($fontDirs, [
+            Yii::getAlias('@webroot') . '/fonts'
+        ]);
+
+
+
+        $pdf->options['fontdata'] = $fontData + [
+            'thsarabun' => [
+                'R' => 'THSarabun.ttf',
+            ]
+
+        ];
+        //'default_font' => 'frutiger'
+
+        $pdf->options['defaultFont'] = 'thsarabun';
+        return $pdf->render();
+        //return $this->render('receipt');
     }
 
     /**
@@ -196,6 +253,25 @@ class OrdersController extends Controller
         $this->findOrder($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+
+    public function actionActive($id)
+    {
+        $model = $this->findOrder($id);
+        $model->setAttribute('status', 10);
+        $model->save();
+
+        return $this->redirect(['view', 'id' => $id]);
+    }
+
+    public function actionInactive($id)
+    {
+        $model = $this->findOrder($id);
+        $model->setAttribute('status', 9);
+        $model->save();
+
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     /**

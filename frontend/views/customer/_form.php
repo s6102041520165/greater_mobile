@@ -10,7 +10,11 @@ use yii\widgets\ActiveForm;
 
 <div class="customer-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => [
+            'enctype' => 'multipart/form-data'
+        ]
+    ]); ?>
     <div class="row">
         <div class="col-lg-6">
             <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>

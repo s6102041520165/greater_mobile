@@ -5,7 +5,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?=$imageProfile?>" class="img-circle" alt="User Image" />
+                <img src="<?= $imageProfile ?>" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
                 <p><?= $nameProfile ?></p>
@@ -31,12 +31,13 @@
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget' => 'tree'],
                 'items' => [
                     ['label' => 'เมนู', 'options' => ['class' => 'header']],
-                    //['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
-                    ['label' => 'ประเภทสินค้า', 'icon' => 'list', 'url' => ['/category'],],
-                    ['label' => 'สินค้า', 'icon' => 'barcode', 'url' => ['/product'],],
-                    ['label' => 'การส่งสินค้า', 'icon' => 'truck', 'url' => ['/tracking'],],
-                    ['label' => 'การสั่งซื้อ', 'icon' => 'gift', 'url' => ['/orders'],],
-                    ['label' => 'ลูกค้า', 'icon' => 'users', 'url' => ['/customer'],],
+                    ['label' => 'หน้าร้าน', 'icon' => 'home', 'url' => Yii::$app->urlManagerFrontend->createUrl(['site/index'])],
+                    ['label' => 'ประเภทสินค้า', 'icon' => 'list', 'url' => ['/category'], 'visible' => Yii::$app->user->can("manageCategory")],
+                    ['label' => 'สินค้า', 'icon' => 'barcode', 'url' => ['/product'], 'visible' => Yii::$app->user->can("manageProduct")],
+                    ['label' => 'การส่งสินค้า', 'icon' => 'truck', 'url' => ['/tracking'], 'visible' => Yii::$app->user->can("manageTracking")],
+                    ['label' => 'การสั่งซื้อ', 'icon' => 'gift', 'url' => ['/orders'], 'visible' => Yii::$app->user->can("manageOrder")],
+                    ['label' => 'ลูกค้า', 'icon' => 'users', 'url' => ['/customer'], 'visible' => Yii::$app->user->can("manageCustomer")],
+                    ['label' => 'ผู้ใช้', 'icon' => 'user', 'url' => ['/user'], 'visible' => Yii::$app->user->can("manageUser")],
                     ['label' => 'รายงาน', 'options' => ['class' => 'header']],
                     [
                         'label' => 'รายงาน',

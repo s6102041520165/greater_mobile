@@ -3,6 +3,7 @@
 use frontend\models\OrderDetail;
 use frontend\models\Orders;
 use frontend\models\Payment;
+use rmrevin\yii\fontawesome\FA;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -20,14 +21,38 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="panel panel-default">
         <div class="panel-body">
             <p>
-                <?= Html::a('แก้ไข', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('ลบ', ['delete', 'id' => $model->id], [
+                <?= Html::a(FA::icon('trash').' ลบ', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => 'คุณต้องการลบรายการนี้ใช่หรือไม่?',
                         'method' => 'post',
                     ],
                 ]) ?>
+
+                <?php if (isset($model->status) && $model->status === 9) : ?>
+                    <?= Html::a(FA::icon('accept').' ยืนยัน', ['active', 'id' => $model->id], [
+                        'class' => 'btn btn-success',
+                        'data' => [
+                            'confirm' => 'คุณต้องการยืนยันการสั่งซื้อรายการนี้ใช่หรือไม่?',
+                            'method' => 'post',
+                        ],
+                    ]) ?>
+                <?php endif; ?>
+
+                <?php if (isset($model->status) && $model->status === 10) : ?>
+                    <?= Html::a(FA::icon('undo').' ยกเลิก', ['inactive', 'id' => $model->id], [
+                        'class' => 'btn btn-warning',
+                        'data' => [
+                            'confirm' => 'คุณต้องการยกเลิกการสั่งซื้อรายการนี้ใช่หรือไม่?',
+                            'method' => 'post',
+                        ],
+                    ]) ?>
+                <?php endif; ?>
+
+                <?php /*echo Html::a(FA::icon('print').' พิมพ์ใบกำกับภาษี', ['receipt', 'id' => $model->id], [
+                    'class' => 'btn btn-primary',
+                    'target' => '_blank',
+                ]) */?>
             </p>
         </div>
     </div>

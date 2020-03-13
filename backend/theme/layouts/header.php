@@ -24,7 +24,7 @@ use yii\helpers\Html;
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="<?= $imageProfile ?>" class="user-image" alt="User Image" />
-                        <span class="hidden-xs"><?= $nameProfile; ?></span>
+                        <span class="hidden-xs"><?= (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : "ไม่ได้เข้าสู่ระบบ"; ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -32,18 +32,12 @@ use yii\helpers\Html;
                             <img src="<?= $imageProfile; ?>" class="img-circle" alt="User Image" />
 
                             <p>
-                            <?= $nameProfile; ?>
+                                <?= $nameProfile; ?>
                             </p>
                         </li>
 
                         <li class="user-footer">
-                            <div class="pull-left">
-                                <?= Html::a(
-                                    'แก้ไขข้อมูลส่วนตัว',
-                                    ['/site/profile'],
-                                    ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
-                                ) ?>
-                            </div>
+
                             <div class="pull-right">
                                 <?= Html::a(
                                     'ออกจากระบบ',
@@ -55,7 +49,7 @@ use yii\helpers\Html;
                     </ul>
                 </li>
 
-                
+
             </ul>
         </div>
     </nav>

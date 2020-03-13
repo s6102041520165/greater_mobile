@@ -66,9 +66,10 @@ AppAsset::register($this);
                         '<li class="divider"></li>',
                         "<li class=\"dropdown-header\">$nameProfiles</li>",
                         ['label' => 'เพิ่มข้อมูลส่วนตัว', 'url' => ['/customer/create'], 'visible' => $isUserProfile],
-                        ['label' => 'แก้ไขข้อมูลส่วนตัว', 'url' => ['/customer/update', 'id' => $customer->id], 'visible' => !$isUserProfile],
+                        ['label' => 'แก้ไขข้อมูลส่วนตัว', 'url' => ['/customer/update', 'id' => (!$isUserProfile) ? $customer->id : ""], 'visible' => !$isUserProfile],
                         [
-                            'label' => 'ไปที่หลังร้าน', 'url' => Yii::$app->urlManagerBackend->createUrl(['site/index','id'=>4]), 'visible' => (!empty(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id)) && (Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id))->roleName === "admin")
+                            'label' => 'ไปที่หลังร้าน', 'url' => Yii::$app->urlManagerBackend->createUrl(['site/index']), 'visible' => (!empty(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id)) 
+                            && ((Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id))->roleName === "admin" || (Yii::$app->authManager->getAssignment('employee', Yii::$app->user->id))->roleName === "employee"))
                         ],
                         ['label' => 'ออกจากระบบ', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post'],],
                     ],

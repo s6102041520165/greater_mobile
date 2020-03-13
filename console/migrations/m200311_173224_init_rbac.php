@@ -77,7 +77,6 @@ class m200311_173224_init_rbac extends Migration
         $auth->add($customer);
         $auth->addChild($customer, $manageProfile);
         $auth->addChild($customer, $reserveCart);
-        $auth->addChild($customer, $manageOrder);
         $auth->addChild($customer, $managePayment);
 
 
@@ -94,6 +93,7 @@ class m200311_173224_init_rbac extends Migration
         $auth->addChild($employee, $manageCustomer);
         $auth->addChild($employee, $manageProduct);
         $auth->addChild($employee, $manageCategory);
+        $auth->addChild($employee, $manageOrder);
         $auth->addChild($employee, $activeOrder); 
         $auth->addChild($employee, $customer);//ทำทุกอย่างที่ลูกค้าทำได้  
 
