@@ -9,7 +9,9 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use frontend\models\Category;
 use frontend\models\Customer;
+use frontend\models\Product;
 
 AppAsset::register($this);
 ?>
@@ -30,6 +32,25 @@ AppAsset::register($this);
 
 <body>
     <?php $this->beginBody() ?>
+    <?php $productList = Category::find()->all() ?>
+    <?php
+    $menuCategories = [
+        '<li class="divider"></li>',
+        ['label' => 'สินค้าทั้งหมด', 'url' => ['/product/index']],
+        '<li class="dropdown-header">ประเภทสินค้า</li>',
+    ];
+    foreach ($productList as $model) {
+        //if(!isset($menuCategories)) {
+        array_push($menuCategories, ['label' => $model->name, 'url' => ['/product/index', 'category' => $model->id]]);
+        //}
+    }
+    /* echo "<pre>";
+    print_r($menuCategories);
+    echo "</pre>";
+    die(); */
+
+
+    ?>
 
     <div class="wrap">
         <?php
@@ -43,7 +64,9 @@ AppAsset::register($this);
         ]);
         $menuItems = [
             ['label' => 'หน้าแรก', 'url' => ['/site/index']],
-            ['label' => 'สินค้า', 'url' => ['/product/index']],
+            [
+                'label' => 'สินค้า', 'items' => $menuCategories
+            ],
             ['label' => 'ติดต่อเรา', 'url' => ['/site/contact']],
 
         ];
@@ -68,8 +91,8 @@ AppAsset::register($this);
                         ['label' => 'เพิ่มข้อมูลส่วนตัว', 'url' => ['/customer/create'], 'visible' => $isUserProfile],
                         ['label' => 'แก้ไขข้อมูลส่วนตัว', 'url' => ['/customer/update', 'id' => (!$isUserProfile) ? $customer->id : ""], 'visible' => !$isUserProfile],
                         [
-                            'label' => 'ไปที่หลังร้าน', 'url' => Yii::$app->urlManagerBackend->createUrl(['site/index']), 'visible' => (!empty(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id)) 
-                            && ((Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id))->roleName === "admin" || (Yii::$app->authManager->getAssignment('employee', Yii::$app->user->id))->roleName === "employee"))
+                            'label' => 'ไปที่หลังร้าน', 'url' => Yii::$app->urlManagerBackend->createUrl(['site/index']), 'visible' => (!empty(Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id))
+                                && ((Yii::$app->authManager->getAssignment('admin', Yii::$app->user->id))->roleName === "admin" || (Yii::$app->authManager->getAssignment('employee', Yii::$app->user->id))->roleName === "employee"))
                         ],
                         ['label' => 'ออกจากระบบ', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post'],],
                     ],

@@ -38,19 +38,7 @@
                     ['label' => 'การสั่งซื้อ', 'icon' => 'gift', 'url' => ['/orders'], 'visible' => Yii::$app->user->can("manageOrder")],
                     ['label' => 'ลูกค้า', 'icon' => 'users', 'url' => ['/customer'], 'visible' => Yii::$app->user->can("manageCustomer")],
                     ['label' => 'ผู้ใช้', 'icon' => 'user', 'url' => ['/user'], 'visible' => Yii::$app->user->can("manageUser")],
-                    ['label' => 'รายงาน', 'options' => ['class' => 'header']],
-                    [
-                        'label' => 'รายงาน',
-                        'icon' => 'file',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'ประเภทสินค้า', 'icon' => 'file', 'url' => ['/report/product'],],
-                            ['label' => 'สินค้า', 'icon' => 'file', 'url' => ['/report/product'],],
-                            ['label' => 'ลูกค้า', 'icon' => 'file', 'url' => ['/report/customer'],],
-                            ['label' => 'ส่งสินค้า', 'icon' => 'file', 'url' => ['/report/receive'],],
-                            ['label' => 'รับสินค้า', 'icon' => 'file', 'url' => ['/report/delivery'],],
-                        ]
-                    ],
+                    ['label' => 'ธนาคาร', 'icon' => 'user', 'url' => ['/bank'], 'visible' => Yii::$app->user->can("manageUser")],                    
                 ],
             ]
         ) ?>

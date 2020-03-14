@@ -60,8 +60,8 @@ return [
         ],
         'urlManagerFrontend' => [
             'class' => 'yii\web\UrlManager',
-            'baseUrl' => '/greater_mobile/frontend/web',
-            'scriptUrl' => '/greater_mobile/frontend/web/index.php',
+            'baseUrl' => '/frontend/web',
+            'scriptUrl' => '/frontend/web/index.php',
             'enablePrettyUrl' => false,
             'showScriptName' => true,
         ],
