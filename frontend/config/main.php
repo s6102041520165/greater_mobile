@@ -52,12 +52,12 @@ return [
         ],
         */
         'urlManager' => [
-            'class' => 'yii\web\urlManager',
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => false,
             'showScriptName' => true,
         ],
         'urlManagerBackend' => [
-            'class' => 'yii\web\urlManager',
+            'class' => 'yii\web\UrlManager',
             'baseUrl' => '/greater_mobile/backend/web',
             'scriptUrl' => '/greater_mobile/backend/web/index.php',
             'enablePrettyUrl' => false,
