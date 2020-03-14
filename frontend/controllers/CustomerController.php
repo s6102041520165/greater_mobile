@@ -95,8 +95,7 @@ class CustomerController extends Controller
                 if ($model->save())
                     return $this->redirect(['view', 'id' => $model->id]);
             }
-            var_dump($model);
-            die();
+            
         }
 
 
