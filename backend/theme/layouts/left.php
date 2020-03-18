@@ -38,7 +38,8 @@
                     ['label' => 'การสั่งซื้อ', 'icon' => 'gift', 'url' => ['/orders'], 'visible' => Yii::$app->user->can("manageOrder")],
                     ['label' => 'ลูกค้า', 'icon' => 'users', 'url' => ['/customer'], 'visible' => Yii::$app->user->can("manageCustomer")],
                     ['label' => 'ผู้ใช้', 'icon' => 'user', 'url' => ['/user'], 'visible' => Yii::$app->user->can("manageUser")],
-                    ['label' => 'ธนาคาร', 'icon' => 'user', 'url' => ['/bank'], 'visible' => Yii::$app->user->can("manageUser")],                    
+                    ['label' => 'ธนาคาร', 'icon' => 'bank', 'url' => ['/bank'], 'visible' => Yii::$app->user->can("manageUser")],
+                    ['label' => 'รายงานยอดขาย', 'icon' => 'file-o', 'url' => ['orders/report'], 'linkOptions' => ['target' => '_blank'], 'visible' => Yii::$app->user->can("manageOrder")],                    
                 ],
             ]
         ) ?>

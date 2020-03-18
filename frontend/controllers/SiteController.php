@@ -15,6 +15,9 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\OrderDetail;
+use frontend\models\Orders;
+use frontend\models\Product;
 
 /**
  * Site controller
@@ -40,6 +43,10 @@ class SiteController extends Controller
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['check-order'],
+                        'allow' => true,
                     ],
                 ],
             ],
@@ -99,6 +106,46 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionCheckOrder()
+    {
+        //Query เฉพาะรายการที่เคยสั่งซื้อไปแล้วมากกว่า 3 วัน และยังไม่ชำระเงิน
+        $sql = "SELECT * ,FROM_UNIXTIME(created_at,'%Y-%m-%d %H:%i:%s') AS duetime
+        FROM `orders` 
+        WHERE CURRENT_TIMESTAMP() > DATE_ADD(FROM_UNIXTIME(created_at,'%Y-%m-%d %H:%i:%s'),INTERVAL 3 DAY) AND status=9; ";
+
+        $params = [];
+        //$order = new Orders();
+
+        $kw = Yii::$app->db->createCommand($sql, $params)->queryAll();
+
+        $response = null;
+        if ($kw !== NULL) {
+            for ($i = 0; $i < count($kw); $i++) {
+                //array_push($arrs, $kw[$i]['id'])
+
+                $orderDetail = OrderDetail::findAll(['orders_id' => $kw[$i]['id']]);
+                foreach ($orderDetail as $model) {
+
+                    //คืน Stock
+                    
+                    $product = Product::findOne(['id' => $model->product_id]);
+                    $product->stock = $model->quantity + $product->stock;
+                    if($product->save()){
+                        $model->delete();
+                    }
+                    
+                }
+
+                Orders::findOne(['id' => $kw[$i]['id']])->delete();
+                
+            }
+        } else
+            $response->status = 'Orders is empty!';
+
+
+        echo json_encode($response);
     }
 
     /**

@@ -44,7 +44,7 @@ class OrdersController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'delete', 'view', 'checkout', 'order-delete', 'active', 'receipt', 'inactive'],
+                        'actions' => ['index', 'create', 'update', 'delete', 'view', 'checkout', 'order-delete', 'active', 'receipt', 'inactive','report'],
                         'roles' => ['manageOrder'],
                     ],
                 ],
@@ -202,7 +202,60 @@ class OrdersController extends Controller
                 // any mpdf options you wish to set
             ],
             'methods' => [
-                'SetTitle' => 'พนักงาน ขสมก.',
+                'SetTitle' => 'รายการสั่งซื้อ',
+                'SetSubject' => 'รายชื่อและรหัสพนักงาน ขสมก',
+                //'SetHeader' => ['รายชื่อพนักงาน||Genarated: ' . date("r")],
+                //'SetFooter' => ['|Page {PAGENO}|'],
+            ]
+        ]);
+
+        $defaultConfig = (new ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+
+        $defaultFontConfig = (new FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $pdf->options['fontDir'] = array_merge($fontDirs, [
+            Yii::getAlias('@webroot') . '/fonts'
+        ]);
+
+
+
+        $pdf->options['fontdata'] = $fontData + [
+            'thsarabun' => [
+                'R' => 'THSarabun.ttf',
+            ]
+
+        ];
+        //'default_font' => 'frutiger'
+
+        $pdf->options['defaultFont'] = 'thsarabun';
+        return $pdf->render();
+        //return $this->render('receipt');
+    }
+
+
+    public function actionReport()
+    {
+        
+
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $this->renderPartial('report'),
+            'options' => [
+                // any mpdf options you wish to set
+            ],
+            'methods' => [
+                'SetTitle' => 'รายการสั่งซื้อ',
                 'SetSubject' => 'รายชื่อและรหัสพนักงาน ขสมก',
                 //'SetHeader' => ['รายชื่อพนักงาน||Genarated: ' . date("r")],
                 //'SetFooter' => ['|Page {PAGENO}|'],

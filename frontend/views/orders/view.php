@@ -3,6 +3,7 @@
 use frontend\models\OrderDetail;
 use frontend\models\Orders;
 use frontend\models\Payment;
+use rmrevin\yii\fontawesome\FA;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -18,6 +19,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orders-view">
     <h1>รายละเอียดใบสั่งซื้อ <?= str_pad($model->id, 6, 0, STR_PAD_LEFT); ?></h1>
+    <?php echo Html::a(FA::icon('print') . ' พิมพ์ใบกำกับภาษี', ['receipt', 'id' => $model->id], [
+        'class' => 'btn btn-primary',
+        'target' => '_blank',
+    ]) ?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -67,13 +72,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'attribute' => 'quantity',
+                'attribute' => 'product.price',
                 'value' => function ($data) {
-                    return $data->quantity;
+                    return number_format($data->product['price']) . " x " . $data->quantity;
                 },
             ],
             [
-                'attribute' => 'product.price',
+                //'attribute' => 'product.price',
+                'label' => 'ราคารวม',
                 'contentOptions' => ['style' => 'width: 10%;text-align:right'],
                 'value' => function ($data) {
 

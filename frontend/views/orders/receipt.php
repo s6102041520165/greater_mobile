@@ -1,7 +1,7 @@
 <?php
 
-use backend\models\Customer;
-use backend\models\OrderDetail;
+use frontend\models\Customer;
+use frontend\models\OrderDetail;
 use frontend\models\Payment;
 use yii\helpers\ArrayHelper;
 use yii\web\View;
@@ -56,7 +56,7 @@ $this->title = 'ใบกำกับภาษี';
                         <tr style="background-color:steelblue; color:whitesmoke">
                             <th style="font-family:thsarabun; font-size:16pt; border:0.5px solid black; color: white">#</th>
                             <th style="font-family:thsarabun; font-size:16pt; border:0.5px solid black; color: white" class="text-left">รายการสินค้า</th>
-                            <th style="font-family:thsarabun; font-size:16pt; border:0.5px solid black; color: white" class="text-right">จำนวนที่สั่งซื้อ</th>
+                            <th style="font-family:thsarabun; font-size:16pt; border:0.5px solid black; color: white" class="text-right">ราคาสินค้า</th>
                             <th style="font-family:thsarabun; font-size:16pt; border:0.5px solid black; color: white" class="text-right">ราคารวม</th>
                         </tr>
                     </thead>
@@ -73,7 +73,7 @@ $this->title = 'ใบกำกับภาษี';
                                 <td class="text-left" style="font-family:thsarabun; font-size:14pt; border:0.5px solid black">
                                     <?= $data->product['name']; ?>
                                 </td>
-                                <td style="font-family:thsarabun; font-size:14pt; border:0.5px solid black"><?= $data->quantity; ?></td>
+                                <td style="font-family:thsarabun; font-size:14pt; border:0.5px solid black;text-align:right"><?=number_format($data->product['price']); ?> x <?= $data->quantity; ?></td>
                                 <td style="font-family:thsarabun; font-size:14pt;text-align:right; border:0.5px solid black"><?= number_format($sumTotal, 2); ?> บาท</td>
                             </tr>
                         <?php
@@ -92,21 +92,6 @@ $this->title = 'ใบกำกับภาษี';
                     </tfoot>
                 </table>
                 <br><br>
-
-                <div style="width: 50%;float:right">
-                    <div style="text-align: center; font-family:thsarabun; font-size:16pt;">
-                    ......................................................................<br/>
-                    (................................................................................)<br/>
-                    พนักงานขาย
-                    </div>
-                    <br><br>
-
-                    <div style="text-align: center; font-family:thsarabun; font-size:16pt;">
-                    ......................................................................<br/>
-                    (................................................................................)<br/>
-                    ผู้รับสินค้า
-                    </div>
-                </div>
 
             </main>
         </div>

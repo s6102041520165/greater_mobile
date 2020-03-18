@@ -12,6 +12,8 @@ use common\widgets\Alert;
 use frontend\models\Category;
 use frontend\models\Customer;
 use frontend\models\Product;
+use yii\helpers\Url;
+use yii\web\View;
 
 AppAsset::register($this);
 ?>
@@ -128,8 +130,31 @@ AppAsset::register($this);
             <p class="pull-right"><?= "Version 1.0" ?></p>
         </div>
     </footer>
+    <?php
+    $url = Url::toRoute(['/site/check-order']);
+    $js = <<<JS
+    //Body function checkExpireOrder
+    function checkExpireOrder(){
+        $.ajax({
+            method: "GET",
+            url: '$url',
+        })
+        .done(function( msg ) {
+            console.log(msg)
+        });
+    }
+    setInterval(checkExpireOrder, 5000)
 
+    JS;
+
+    $this->registerJs(
+        $js,
+        View::POS_READY,
+        'my-button-handler'
+    );
+    ?>
     <?php $this->endBody() ?>
+
 </body>
 
 </html>

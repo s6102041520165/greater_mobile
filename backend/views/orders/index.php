@@ -13,11 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orders-index">
 
-
-    <p>
-        <?= Html::a(FA::icon('plus') . ' เพิ่มรายการสั่งซื้อ', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>

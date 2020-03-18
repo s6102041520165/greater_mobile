@@ -37,8 +37,8 @@ class CartController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','create','update','delete','view','confirm'],
-                        'roles' => ['@','reserveCart'],
+                        'actions' => ['index', 'create', 'update', 'delete', 'view', 'confirm'],
+                        'roles' => ['@', 'reserveCart'],
                     ],
                 ],
             ],
@@ -131,14 +131,14 @@ class CartController extends Controller
 
                     /**Decrement stock and update product table*/
                     $modelProduct = Product::findOne(['id' => $data->product_id]);
-                    $modelProduct->setAttribute('stock',(int)($modelProduct->stock - $data->quantity));
+                    $modelProduct->setAttribute('stock', (int) ($modelProduct->stock - $data->quantity));
                     $modelProduct->save();
 
                     /**Deleted all product in cart */
                     Cart::deleteAll(['cart.created_by' => Yii::$app->user->id]);
                 }
 
-                Yii::$app->session->setFlash('success','บันทึกรายการที่คุณสั่งซื้อสำเร็จ');
+                Yii::$app->session->setFlash('success', 'บันทึกรายการที่คุณสั่งซื้อสำเร็จ');
             }
             return $this->redirect(['/orders/index']);
         }
@@ -159,14 +159,19 @@ class CartController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $product = Product::findOne(['id' => $model->product_id]);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->quantity <= $product->stock) {
+                if ($model->save())
+                    return $this->redirect(['index']);
+            }
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        Yii::$app->session->setFlash('danger', 'จำนวนรายการต้องไม่มากกว่า ' . $product->stock);
+
+
+        return $this->redirect(['index']);
     }
 
     /**

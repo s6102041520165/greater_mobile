@@ -38,11 +38,11 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'price', 'barcode', 'stock', 'created_by', 'created_at', 'updated_by', 'updated_at', 'category_id'], 'required'],
+            [['name', 'price', 'stock', 'created_by', 'created_at', 'updated_by', 'updated_at', 'category_id'], 'required'],
             [['price'], 'number'],
             [['stock', 'created_by', 'created_at', 'updated_by', 'updated_at', 'category_id'], 'integer'],
-            [['name', 'barcode'], 'string', 'max' => 100],
-            [['barcode'],'match', 'pattern'=>'/[\u0030-\u0074]/u', 'skipOnError'=>true],
+            [['name'], 'string', 'max' => 100],
+            //[['barcode'],'match', 'pattern'=>'/[\u0030-\u0074]/u', 'skipOnError'=>true],
             [['description', 'picture'], 'string', 'max' => 255],
         ];
     }
@@ -57,7 +57,6 @@ class Product extends \yii\db\ActiveRecord
             'name' => 'ชื่อสินค้า',
             'description' => 'รายละเอียด',
             'price' => 'ราคา',
-            'barcode' => 'บาร์โค๊ด',
             'picture' => 'รูปภาพ',
             'stock' => 'คงเหลือ',
             'created_by' => 'เพิ่มโดย',

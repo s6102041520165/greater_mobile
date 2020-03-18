@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'status',
                         'format' => 'raw',
                         'value' => function ($data) {
-                            return "<span class='badge'>" . ($data->status == 9) ? "ไม่ได้ใช้งาน" : "ใช้งาน" . "</span>";
+                            return ($data->status == 9) ? "ไม่ได้ใช้งาน" : "ใช้งาน";
                         }
                     ],
                     'created_at:relativeTime',

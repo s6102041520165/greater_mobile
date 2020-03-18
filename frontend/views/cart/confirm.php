@@ -29,7 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'product_id',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    return $data->product['name'] . " <img src ='" . Yii::getAlias('@web/../../image/') . $data->product['picture'] . "' style='width:120px;height:auto' />";
+                    $image = explode(',',$data->product['picture']);
+                    return $data->product['name'] . " <img src ='" . Yii::getAlias('@web/../../image/') . $image[0] . "' style='width:120px;height:auto' />";
                 }
             ],
             //'created_by',

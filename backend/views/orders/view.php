@@ -49,10 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]) ?>
                 <?php endif; ?>
 
-                <?php /*echo Html::a(FA::icon('print').' พิมพ์ใบกำกับภาษี', ['receipt', 'id' => $model->id], [
+                <?php echo Html::a(FA::icon('print').' พิมพ์ใบกำกับภาษี', ['receipt', 'id' => $model->id], [
                     'class' => 'btn btn-primary',
                     'target' => '_blank',
-                ]) */?>
+                ])?>
             </p>
         </div>
     </div>

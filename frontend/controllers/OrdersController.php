@@ -2,9 +2,14 @@
 
 namespace frontend\controllers;
 
+use frontend\models\OrderDetail;
 use Yii;
 use frontend\models\Orders;
 use frontend\models\OrdersSearch;
+use frontend\models\Product;
+use kartik\mpdf\Pdf;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -82,6 +87,59 @@ class OrdersController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+    public function actionReceipt($id)
+    {
+        $model = $this->findModel($id);
+
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $this->renderPartial('receipt', ['model' => $model]),
+            'options' => [
+                // any mpdf options you wish to set
+            ],
+            'methods' => [
+                'SetTitle' => 'รายการสั่งซื้อ',
+                'SetSubject' => 'รายชื่อและรหัสพนักงาน ขสมก',
+                //'SetHeader' => ['รายชื่อพนักงาน||Genarated: ' . date("r")],
+                //'SetFooter' => ['|Page {PAGENO}|'],
+            ]
+        ]);
+
+        $defaultConfig = (new ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+
+        $defaultFontConfig = (new FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $pdf->options['fontDir'] = array_merge($fontDirs, [
+            Yii::getAlias('@webroot') . '/fonts'
+        ]);
+
+
+
+        $pdf->options['fontdata'] = $fontData + [
+            'thsarabun' => [
+                'R' => 'THSarabun.ttf',
+            ]
+
+        ];
+        //'default_font' => 'frutiger'
+
+        $pdf->options['defaultFont'] = 'thsarabun';
+        return $pdf->render();
+        //return $this->render('receipt');
+    }
+
+
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -104,6 +162,14 @@ class OrdersController extends Controller
      */
     public function actionDelete($id)
     {
+        $orderDetail = OrderDetail::findAll(['orders_id' => $id]);
+        foreach ($orderDetail as $model) {
+            $product = Product::findOne(['id' => $model->product_id]);
+            $product->stock = $model->quantity + $product->stock;
+            if($product->save()){
+                $model->delete();
+            }
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

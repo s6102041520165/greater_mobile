@@ -1,5 +1,7 @@
 <?php
 
+use backend\models\Bank;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -14,12 +16,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <h3>คุณสามารถแจ้งชำระเงินมาที่บัญชีดังนี้</h3>
+    <?php
+    $bankProvider = new ActiveDataProvider([
+        'query' => Bank::find(),
+        'pagination' => [
+            'pageSize' => 20,
+        ],
+    ]);
+    echo GridView::widget([
+        'dataProvider' => $bankProvider,
+    ]); ?>
+
+    <hr>
+    
     <p>
         <?= Html::a('แจ้งชำระเงิน', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
 
     <?= GridView::widget([

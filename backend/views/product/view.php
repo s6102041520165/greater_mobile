@@ -32,8 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'picture',
                 'format' => 'raw',
-                'value ' => function($data){
-                    return "<img src='".Yii::getAlias('@web/../../image/'.$data->picture)."' style='width:500px;height:auto' />";
+                'value' => function($data){
+                    $image = explode(",",$data->picture);
+                    return '<img src="'.Yii::getAlias('@web/../../image/').$image[0].'"
+                    style="width:300px;height:auto" />';
                 }
             ],
             'description',

@@ -2,6 +2,8 @@
 
 use backend\models\Customer;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\View;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -84,5 +86,29 @@ if (Yii::$app->controller->action->id === 'login') {
     </body>
 
     </html>
+    <?php
+    $url = Url::toRoute(['/site/check-order']);
+    $js = <<<JS
+    //Body function checkExpireOrder
+    function checkExpireOrder(){
+        $.ajax({
+            method: "GET",
+            url: '$url',
+        })
+        .done(function( msg ) {
+            console.log(msg)
+        });
+    }
+    setInterval(checkExpireOrder, 5000)
+
+    JS;
+
+    $this->registerJs(
+        $js,
+        View::POS_READY,
+        'my-button-handler'
+    );
+    ?>
+
     <?php $this->endPage() ?>
 <?php } ?>

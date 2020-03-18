@@ -25,6 +25,10 @@ body {
     color: whitesmoke;
 }
 
+.btn{
+    margin: 2px;
+}
+
 .wrap {
     min-height: 100%;
     height: auto;

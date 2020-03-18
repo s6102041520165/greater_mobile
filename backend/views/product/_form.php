@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
                 <?php //var_dump($imageModel) 
                 ?>
                 <div class="col-lg-4">
-                    <?php echo $form->field($imageModel, 'imageFile')->fileInput() ?>
+                    <?php echo $form->field($imageModel, 'imageFiles[]')->fileInput(['multiple' => true]) ?>
                 </div>
 
                 <div class="col-lg-4">
@@ -39,9 +39,6 @@ use yii\widgets\ActiveForm;
                 ?>
                 <div class="col-lg-12">
                     <?= $form->field($model, 'category_id')->dropDownList($catg, ['prompt' => '---------- select ----------']) ?>
-                </div>
-                <div class="col-lg-12">
-                    <?= $form->field($model, 'barcode')->textInput() ?>
                 </div>
 
                 <div class="col-lg-12">

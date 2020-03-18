@@ -30,21 +30,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
-                    'id',
                     'name',
                     [
                         'attribute' => 'price',
+                        'value' => function ($data) {
+                            return Yii::$app->formatter->asCurrency($data->price, 'THB');
+                        }
                     ],
-                    'barcode',
+                    //'barcode',
                     [
                         'attribute' => 'picture',
                         'format' => 'raw',
                         'value' => function ($data) {
-                            return '<img src="' . Yii::getAlias('@web/../../image/') . $data->picture . '" width="250" /> ';
+                            $image = explode(",",$data->picture);
+                            return '<img src="' . Yii::getAlias('@web/../../image/') . $image[0] . '" width="250" /> ';
                         }
                     ],
                     //'stock',
-                    //'created_by',
+                    [
+                        'attribute' => 'created_by',
+                        'value' => function($data){
+                            return $data->creator['username'];
+                        }
+                    ],
                     //'created_at',
                     //'updated_by',
                     //'updated_at',

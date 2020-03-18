@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Product;
 use backend\models\ProductSearch;
+use backend\models\UploadForm;
 use backend\models\UploadSingleForm;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -78,18 +79,19 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
-        $uploadSingleFile = new UploadSingleForm();
+        $uploadForm = new UploadForm();
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isPost) {
-            $uploadSingleFile->imageFile = UploadedFile::getInstance($uploadSingleFile, 'imageFile');
+            $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
 
-            //print_r($pos);die();
-            //Upload file
-            $picture = $uploadSingleFile->upload();
-            //var_dump($picture);die();
+            //var_dump($uploadForm->imageFiles);die();
+            $picture = $uploadForm->upload();
+            
             if ($picture) {
                 //Uploaded successfully
-                $model->picture = $picture;
-                //var_dump($model->picture);die();
+                $mergeTextPicture = implode(',',$picture);
+                
+                $model->picture = $mergeTextPicture;
+                
 
                 $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -98,7 +100,7 @@ class ProductController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'imageModel' => $uploadSingleFile,
+            'imageModel' => $uploadForm,
         ]);
     }
 
@@ -112,9 +114,24 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $imageModel = new \backend\models\UploadSingleForm();
+        $imageModel = new \backend\models\UploadForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $imageModel->imageFiles = UploadedFile::getInstances($imageModel, 'imageFiles');
+
+            //var_dump($imageModel->imageFiles);die();
+            $picture = $imageModel->upload();
+            
+            if ($picture) {
+                //Uploaded successfully
+                $mergeTextPicture = implode(',',$picture);
+                
+                $model->picture = $mergeTextPicture;
+                
+
+                $model->save(false);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

@@ -39,10 +39,10 @@ class Bank extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'bank' => 'Bank',
-            'bank_number' => 'Bank Number',
+            'id' => 'รหัสอ้างอิง',
+            'name' => 'ชื่อบัญชี',
+            'bank' => 'ธนาคาร',
+            'bank_number' => 'เลขบัญชี',
         ];
     }
 }
