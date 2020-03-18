@@ -88,12 +88,12 @@ if (Yii::$app->controller->action->id === 'login') {
     </html>
     <?php
     $url = Url::toRoute(['/site/check-order']);
-    $js = <<<JS
+    $js = '
     //Body function checkExpireOrder
     function checkExpireOrder(){
         $.ajax({
             method: "GET",
-            url: '$url',
+            url: "'.$url.'",
         })
         .done(function( msg ) {
             console.log(msg)
@@ -101,7 +101,7 @@ if (Yii::$app->controller->action->id === 'login') {
     }
     setInterval(checkExpireOrder, 5000)
 
-    JS;
+    ';
 
     $this->registerJs(
         $js,

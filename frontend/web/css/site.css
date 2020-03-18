@@ -17,16 +17,16 @@ body {
     background-color: #6a0080;
 }
 
+.row [class*='col-'] {
+    min-height: 400px;
+}
+
 .navbar-inverse .navbar-nav>li>a {
     color: whitesmoke;
 }
 
 .navbar-inverse .navbar-brand {
     color: whitesmoke;
-}
-
-.btn{
-    margin: 2px;
 }
 
 .wrap {

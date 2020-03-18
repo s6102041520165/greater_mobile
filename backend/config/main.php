@@ -54,14 +54,14 @@ return [
         ],
         */
         'urlManager' => [
-            'class' => 'yii\web\UrlManager',
+            'class' => 'yii\web\urlManager',
             'enablePrettyUrl' => false,
             'showScriptName' => true,
         ],
         'urlManagerFrontend' => [
-            'class' => 'yii\web\UrlManager',
+            'class' => 'yii\web\urlManager',
             'baseUrl' => '/frontend/web',
-            'scriptUrl' => '/frontend/web/index.php',
+            'scriptUrl' => 'frontend/web/index.php',
             'enablePrettyUrl' => false,
             'showScriptName' => true,
         ],

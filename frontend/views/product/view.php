@@ -71,20 +71,19 @@ $imageList = explode(',', $model->picture);
     </div>
 
     <?php
-    $script = <<<JS
+    $script = "
         $('.product-thumbnail').on('click', function() { 
             $('#product-profile').attr('src',$(this).attr('href'));
             //console.log($(this).attr('href'))
             //alert('Button clicked!'); 
             return false; 
         });
-    JS;
-    $css = <<<CSS
+    ";
+    $css = "
         .product-thumbnail:hover{
             filter: grayscale(100%);
-            zoom: 150%;
         }
-    CSS;
+    ";
 
     $this->registerCss($css);
     $this->registerJs(

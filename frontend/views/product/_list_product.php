@@ -3,7 +3,7 @@
 use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 ?>
-<div class="panel panel-default" style="margin: 10px 0px;padding:5px">
+<div class="panel panel-default" style="margin: 10px 0px;padding:5px;">
     <?php $image = explode(",", $model->picture); ?>
     <div class="panel-body text-center">
         <img class="img-thumbnail rounded" src="<?= Yii::getAlias('@web/../../image/') . $image[0]; ?>" alt="">
