@@ -1,0 +1,49 @@
+<aside class="main-sidebar">
+
+    <section class="sidebar">
+
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="<?= $imageProfile ?>" class="img-circle" alt="User Image" />
+            </div>
+            <div class="pull-left info">
+                <p><?= $nameProfile ?></p>
+
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+        </div>
+
+        <!-- 
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search..." />
+                <span class="input-group-btn">
+                    <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+        <!-- /.search form-->
+
+        <?= dmstr\widgets\Menu::widget(
+            [
+                'options' => ['class' => 'sidebar-menu tree', 'data-widget' => 'tree'],
+                'items' => [
+                    ['label' => 'เมนู', 'options' => ['class' => 'header']],
+                    ['label' => 'หน้าร้าน', 'icon' => 'home', 'url' => Yii::$app->urlManagerFrontend->createUrl(['site/index'])],
+                    ['label' => 'ประเภทสินค้า', 'icon' => 'list', 'url' => ['/category'], 'visible' => Yii::$app->user->can("manageCategory")],
+                    ['label' => 'สินค้า', 'icon' => 'barcode', 'url' => ['/product'], 'visible' => Yii::$app->user->can("manageProduct")],
+                    ['label' => 'การส่งสินค้า', 'icon' => 'truck', 'url' => ['/tracking'], 'visible' => Yii::$app->user->can("manageTracking")],
+                    ['label' => 'การสั่งซื้อ', 'icon' => 'gift', 'url' => ['/orders'], 'visible' => Yii::$app->user->can("manageOrder")],
+                    ['label' => 'ลูกค้า', 'icon' => 'users', 'url' => ['/customer'], 'visible' => Yii::$app->user->can("manageCustomer")],
+                    ['label' => 'ผู้ใช้', 'icon' => 'user', 'url' => ['/user'], 'visible' => Yii::$app->user->can("manageUser")],
+                    ['label' => 'ธนาคาร', 'icon' => 'bank', 'url' => ['/bank'], 'visible' => Yii::$app->user->can("manageUser")],
+                    ['label' => 'รายงานยอดขาย', 'icon' => 'file-o', 'url' => ['orders/report'], 'linkOptions' => ['target' => '_blank'], 'visible' => Yii::$app->user->can("manageOrder")],                    
+                ],
+            ]
+        ) ?>
+
+    </section>
+
+</aside>
